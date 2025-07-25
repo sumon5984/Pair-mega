@@ -6,7 +6,7 @@ const pino = require("pino");
 let { toBuffer } = require("qrcode");
 const path = require('path');
 const fs = require("fs-extra");
-const { Boom } = require("@hapi/boom");
+const { Boom } = require("@hapi/boom");//
 
 const MESSAGE = process.env.MESSAGE ||  `
 🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
