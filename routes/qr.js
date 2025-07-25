@@ -1,5 +1,4 @@
-
-const express = require('express');
+/*const express = require('express');
 const fs = require('fs-extra');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
@@ -252,6 +251,132 @@ process.on('SIGINT', async () => {
         cleanupQRSession(sessionId)
     );
     await Promise.allSettled(cleanupPromises);
+});
+
+module.exports = router;
+*/
+
+
+
+const { exec } = require("child_process");
+const { upload } = require('../utils/mega');
+const express = require('express');
+const router = express.Router();
+const pino = require("pino");
+const { toBuffer } = require("qrcode");
+const path = require('path');
+const fs = require("fs-extra");
+const { Boom } = require("@hapi/boom");
+
+const MESSAGE = process.env.MESSAGE || `
+🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
+🔥 Your Bot is Now Alive, Royal & Ready to Rock! 🔥
+━━━━━━━━━━━━━━━━━━━━━━
+🟢 Session qr code Successfully ✅
+📌 WhatsApp Group: https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2
+📦 GitHub: github.com/sumon9836/KAISEN-MD.git
+👑 Dev: Lovely-Boy.x.Sumon
+🧠 Powered By: Kąìʂҽղ Intel Core™
+━━━━━━━━━━━━━━━━━━━━━━
+📝 “𝐁𝐨𝐭 𝐁𝐲 𝐍𝐚𝐦𝐞, 𝐋𝐞𝐠𝐞𝐧𝐝 𝐁𝐲 𝐅𝐚𝐦𝐞”
+`;
+
+const AUTH_DIR = path.join(__dirname,  '..', 'auth_info_baileys');
+if (fs.existsSync(AUTH_DIR)) fs.emptyDirSync(AUTH_DIR);
+
+router.get('/', async (req, res) => {
+    const { default: makeWASocket, useMultiFileAuthState, delay, Browsers, DisconnectReason } = require("@whiskeysockets/baileys");
+
+    async function startBot() {
+        const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
+        try {
+            const sock = makeWASocket({
+                logger: pino({ level: "silent" }),
+                printQRInTerminal: false,
+                browser: Browsers.macOS("Desktop"),
+                auth: state,
+            });
+
+            sock.ev.on('creds.update', saveCreds);
+
+            sock.ev.on("connection.update", async ({ connection, lastDisconnect, qr }) => {
+                if (qr && !res.headersSent) {
+                    try {
+                        const qrBuffer = await toBuffer(qr);
+                        res.setHeader('Content-Type', 'image/png');
+                        return res.end(qrBuffer);
+                    } catch (err) {
+                        console.error('❌ Error generating QR:', err);
+                        res.status(500).send('QR Generation Failed');
+                        return;
+                    }
+                }
+
+                if (connection === "open") {
+                    try {
+                        await delay(3000);
+                        const user = sock.user.id;
+
+                        const randomId = () => {
+                            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            const text = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+                            const num = Math.floor(Math.random() * 10000);
+                            return `${text}${num}`;
+                        };
+
+                        const credsFile = path.join(AUTH_DIR, 'creds.json');
+                        const url = await upload(fs.createReadStream(credsFile), `${randomId()}.json`);
+                        const sessionId = url.replace('https://mega.nz/file/', '');
+
+                        const sent = await sock.sendMessage(user, { text: `KAISEN~${sessionId}` });
+                        await sock.sendMessage(user, { text: MESSAGE }, { quoted: sent });
+
+                        // Delete creds and restart after 20s
+                        setTimeout(() => {
+                            try {
+                                fs.emptyDirSync(AUTH_DIR);
+                                console.log("✅ Auth folder cleaned after session.");
+                            } catch (e) {
+                                console.error("❌ Failed to clean auth folder:", e);
+                            }
+                            process.exit(1);
+                        }, 20000);
+
+                    } catch (err) {
+                        console.error("❌ Error in success handler:", err);
+                        fs.emptyDirSync(AUTH_DIR);
+                        process.exit(1);
+                    }
+                }
+
+                if (connection === "close") {
+                    const reason = new Boom(lastDisconnect?.error)?.output.statusCode;
+                    fs.emptyDirSync(AUTH_DIR);
+
+                    switch (reason) {
+                        case DisconnectReason.restartRequired:
+                            console.log("🔁 Restart required...");
+                            return startBot();
+                        case DisconnectReason.loggedOut:
+                            console.log("📴 Logged out. Please rescan.");
+                            process.exit(1);
+                        default:
+                            console.log("❌ Connection closed:", reason);
+                            exec('pm2 restart qasim');
+                            process.exit(1);
+                    }
+                }
+            });
+
+        } catch (err) {
+            console.error("❌ Critical bot error:", err);
+            fs.emptyDirSync(AUTH_DIR);
+            if (!res.headersSent) res.send({ code: "Internal error. Try again." });
+            process.exit(1);
+        }
+    }
+
+    return await startBot();
 });
 
 module.exports = router;
