@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const fs = require('fs-extra');
 let router = express.Router();
 const pino = require("pino");
@@ -198,5 +198,151 @@ process.on('SIGINT', async () => {
     process.exit(0);
 });
 
+
+module.exports = router;
+*/
+
+const express = require('express');
+const fs = require('fs-extra');
+const path = require('path');
+const { exec } = require('child_process');
+const pino = require('pino');
+const { Boom } = require('@hapi/boom');
+const { upload } = require('./utils/mega');
+
+const {
+    default: makeWASocket,
+    useMultiFileAuthState,
+    delay,
+    makeCacheableSignalKeyStore,
+    Browsers,
+    DisconnectReason,
+} = require('@whiskeysockets/baileys');
+
+const router = express.Router();
+const AUTH_DIR = path.join(__dirname, 'auth_info_baileys');
+
+const MESSAGE = process.env.MESSAGE || `
+🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
+🔥 Your Bot is Now Alive, Royal & Ready to Rock! 🔥
+━━━━━━━━━━━━━━━━━━━━━━
+🟢 Session pair code Successfully ✅
+🔗 Connect for Instant Support & Royal Help:
+📌 WhatsApp Group:
+https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2
+━━━━━━━━━━━━━━━━━━━━━━
+📦 GitHub Repo — Star It For Power Boost!
+✴️ 𝐊ąìʂҽɳ-𝐌𝐃 GitHub:
+🪂github.com/sumon9836/KAISEN-MD.git
+━━━━━━━━━━━━━━━━━━━━━━
+🚀 Deploy Your Royal Bot Now
+👑 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲: 𝐋𝐨𝐯𝐞𝐥𝐲-𝐁𝐨𝐲.𝐱.𝐒𝐮𝐦𝐨𝐧
+🍉 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲: 𝐊ąìʂҽղ 𝐈𝐧𝐭𝐞𝐥 𝐂𝐨𝐫𝐞™
+✨ Deploy & Rule Like a True Legend
+━━━━━━━━━━━━━━━━━━━━━━
+📝 Royal Quote of the Bot:
+> “𝐁𝐨𝐭 𝐁𝐲 𝐍𝐚𝐦𝐞, 𝐋𝐞𝐠𝐞𝐧𝐝 𝐁𝐲 𝐅𝐚𝐦𝐞”
+— Royalty Runs in the Code
+━━━━━━━━━━━━━━━━━━━━━━
+🦾 𝐊ąìʂҽղ_𝐌𝐃 || 𝐒𝐚𝐦𝐢𝐧_𝐒𝐮𝐦𝐨𝐧 || 𝐑𝐨𝐲𝐚𝐥𝐁𝐨𝐭
+`;
+
+if (fs.existsSync(AUTH_DIR)) fs.emptyDirSync(AUTH_DIR);
+
+router.get('/', async (req, res) => {
+    const number = (req.query.number || '').replace(/[^0-9]/g, '');
+    if (!number) return res.status(400).json({ error: 'Please provide a valid number' });
+
+    async function startBot() {
+        const { state, saveCreds } = await useMultiFileAuthState(AUTH_DIR);
+
+        try {
+            const socket = makeWASocket({
+                auth: {
+                    creds: state.creds,
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })),
+                },
+                printQRInTerminal: false,
+                logger: pino({ level: 'silent' }),
+                browser: Browsers.macOS('Safari'),
+            });
+
+            if (!socket.authState.creds.registered) {
+                await delay(1500);
+                const code = await socket.requestPairingCode(number);
+                if (!res.headersSent) return res.send({ code });
+            }
+
+            socket.ev.on('creds.update', saveCreds);
+
+            socket.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
+                if (connection === 'open') {
+                    try {
+                        await delay(10000); // Wait for everything to sync
+
+                        const credsFile = path.join(AUTH_DIR, 'creds.json');
+                        if (!fs.existsSync(credsFile)) return;
+
+                        function randomMegaId(length = 6, numLen = 4) {
+                            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            const id = Array.from({ length }, () => chars.charAt(Math.floor(Math.random() * chars.length))).join('');
+                            return id + Math.floor(Math.random() * Math.pow(10, numLen));
+                        }
+
+                        const fileName = `${randomMegaId()}.json`;
+                        const url = await upload(fs.createReadStream(credsFile), fileName);
+                        const sessionId = url.replace('https://mega.nz/file/', '');
+
+                        const sent = await socket.sendMessage(socket.user.id, { text: `KAISEN~${sessionId}` });
+                        await socket.sendMessage(socket.user.id, { text: MESSAGE }, { quoted: sent });
+
+                        // Delete auth folder after 20 seconds
+                        setTimeout(() => {
+                            fs.emptyDir(AUTH_DIR).catch(err => console.error('Failed to delete auth dir:', err));
+                        }, 20000);
+                    } catch (err) {
+                        console.error('Error during upload/send:', err);
+                        process.exit(1);
+                    }
+                }
+
+                if (connection === 'close') {
+                    const reason = new Boom(lastDisconnect?.error)?.output.statusCode;
+                    switch (reason) {
+                        case DisconnectReason.connectionClosed:
+                            console.log("Connection closed!");
+                            break;
+                        case DisconnectReason.connectionLost:
+                            console.log("Connection lost!");
+                            break;
+                        case DisconnectReason.restartRequired:
+                            console.log("Restart required...");
+                            return startBot();
+                        case DisconnectReason.timedOut:
+                            console.log("Connection timed out!");
+                            break;
+                        default:
+                            console.error("Unknown disconnect reason:", reason);
+                            exec('pm2 restart qasim');
+                            break;
+                    }
+                }
+            });
+        } catch (err) {
+            console.error('Fatal bot error:', err);
+            if (!res.headersSent) res.send({ code: 'Try after few minutes' });
+            setTimeout(() => {
+                fs.emptyDir(AUTH_DIR).catch(() => {});
+                process.exit(1);
+            }, 2000);
+        }
+    }
+
+    startBot().catch(err => {
+        console.error('Unhandled error:', err);
+        if (!res.headersSent) res.send({ code: 'Internal server error' });
+        process.exit(1);
+    });
+});
 
 module.exports = router;
