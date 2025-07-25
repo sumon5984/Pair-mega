@@ -1,0 +1,946 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐊ąìʂҽղ-𝐌𝐃 | Advanced Bot Pairing</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --shadow-glow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            33% { transform: scale(1.1) rotate(120deg); }
+            66% { transform: scale(0.9) rotate(240deg); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffffff 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatUp 6s infinite linear;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #0c0c0c 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .main-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            max-width: 600px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .status-banner {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .status-online {
+            border-left: 4px solid #00ff88;
+        }
+
+        .status-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00ff88;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .feature-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .actions-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-qr {
+            background: var(--primary-gradient);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-pair {
+            background: var(--secondary-gradient);
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-whatsapp {
+            background: var(--success-gradient);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-deploy {
+            background: var(--warning-gradient);
+            color: #333;
+            box-shadow: 0 10px 30px rgba(255, 236, 210, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .btn i {
+            font-size: 1.4rem;
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            animation: fadeIn 2s ease-out 1.4s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--glass-bg);
+            padding: 25px 20px;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            min-width: 140px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #06ffa5;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .footer {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: fadeIn 2s ease-out 1.6s both;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            background: var(--primary-gradient);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 10px 15px;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            z-index: 100;
+            animation: fadeIn 2s ease-out 2s both;
+        }
+
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            display: inline-block;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .actions-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 280px;
+                justify-content: center;
+            }
+
+            .stats-section {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .connection-status {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                padding: 18px 30px;
+                font-size: 1rem;
+            }
+
+            .feature-card {
+                padding: 25px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 40px 15px 30px;
+            }
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+
+        .alert-error {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Initializing Kaisen-MD System...</div>
+    </div>
+
+    <div class="connection-status">
+        <span class="connection-dot"></span>
+        Server Online
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h1 class="main-title">𝐊ąìʂҽղ-𝐌𝐃</h1>
+            <p class="subtitle">Advanced WhatsApp Bot Pairing System</p>
+            <p class="description">
+                Experience the future of WhatsApp automation with our cutting-edge bot pairing technology. 
+                Secure, fast, and reliable connection for your digital assistant.
+            </p>
+        </header>
+
+        <div class="status-banner status-online">
+            <div class="status-title">
+                <i class="fas fa-check-circle"></i>
+                System Online & Ready
+            </div>
+            <div class="status-description">
+                All services are operational. You can now proceed with bot pairing using QR code or SMS verification.
+            </div>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h3 class="feature-title">QR Code Scanner</h3>
+                <p class="feature-description">Instant pairing with secure QR code scanning technology. Scan with your WhatsApp camera for immediate connection.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">SMS Pair Code</h3>
+                <p class="feature-description">Alternative pairing method using SMS verification codes. Enter your phone number to receive a pairing code.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Secure Connection</h3>
+                <p class="feature-description">End-to-end encrypted pairing with enterprise-grade security protocols and data protection.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="feature-title">Instant Deploy</h3>
+                <p class="feature-description">One-click deployment to cloud platforms worldwide with automatic scaling and monitoring.</p>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-item">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">Uptime</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">15K+</span>
+                <span class="stat-label">Active Bots</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Support</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100+</span>
+                <span class="stat-label">Features</span>
+            </div>
+        </section>
+
+        <section class="actions-section">
+            <a href="/qr-scanner" class="btn btn-qr" id="qrBtn">
+                <i class="fas fa-qrcode"></i>
+                QR Code Pairing
+            </a>
+            <a href="/pair" class="btn btn-pair" id="pairBtn">
+                <i class="fas fa-mobile-alt"></i>
+                SMS Pair Code
+            </a>
+            <a href="https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2" target="_blank" class="btn btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                Support Group
+            </a>
+            <a href="https://github.com/sumon9836/KAISEN-MD" target="_blank" class="btn btn-deploy">
+                <i class="fab fa-github"></i>
+                Deploy Bot
+            </a>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <h3 class="footer-title">𝐊ąìʂҽղ-𝐌𝐃 | Royal Bot Experience</h3>
+                <p class="footer-text">
+                    Developed by 𝐋𝐨𝐯𝐞𝐥𝐲-𝐁𝐨𝐲.𝐱.𝐒𝐮𝐦𝐨𝐧 | Powered by 𝐊ąìʂҽղ 𝐈𝐧𝐭𝐞𝐥 𝐂𝐨𝐫𝐞™<br>
+                    Advanced WhatsApp automation with cutting-edge AI technology
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/sumon9836/KAISEN-MD" target="_blank" class="social-link" title="GitHub Repository">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2" target="_blank" class="social-link" title="WhatsApp Support">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Rate Us">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Documentation">
+                        <i class="fas fa-book"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Enhanced loading screen with better UX
+        window.addEventListener('load', () => {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                showAlert('System initialized successfully!', 'success');
+            }, 2000);
+        });
+
+        // Alert function for better user feedback
+        function showAlert(message, type = 'success') {
+            const alertContainer = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    alertContainer.removeChild(alert);
+                }, 300);
+            }, 3000);
+        }
+
+        // Enhanced particle system
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            // Random colors for particles
+            const colors = ['#ffffff', '#667eea', '#f093fb', '#4facfe', '#43e97b'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.background = `radial-gradient(circle, ${randomColor} 0%, transparent 70%)`;
+            
+            document.getElementById('particles').appendChild(particle);
+
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, 12000);
+        }
+
+        // Create particles continuously with better performance
+        setInterval(createParticle, 400);
+
+        // Enhanced button interactions with sound feedback simulation
+        function addButtonEffects() {
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.05)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+
+                btn.addEventListener('click', function(e) {
+                    const action = this.textContent.trim();
+                    
+                    // Create ripple effect
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.3);
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${e.clientX - rect.left - size/2}px;
+                        top: ${e.clientY - rect.top - size/2}px;
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        if (ripple.parentNode === this) {
+                            this.removeChild(ripple);
+                        }
+                    }, 600);
+                    
+                    console.log(`Action initiated: ${action}`);
+                    showAlert(`Redirecting to ${action}...`, 'success');
+                });
+            });
+        }
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                0% {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize button effects
+        addButtonEffects();
+
+        // Health check for server status
+        async function checkServerHealth() {
+            try {
+                const response = await fetch('/health', { method: 'HEAD' });
+                const statusDot = document.querySelector('.connection-dot');
+                const statusText = document.querySelector('.connection-status');
+                
+                if (response.ok) {
+                    statusDot.style.background = '#00ff88';
+                    statusText.innerHTML = '<span class="connection-dot"></span>Server Online';
+                } else {
+                    statusDot.style.background = '#ff4444';
+                    statusText.innerHTML = '<span class="connection-dot"></span>Server Issues';
+                }
+            } catch (error) {
+                console.warn('Health check failed:', error);
+            }
+        }
+
+        // Check server health every 30 seconds
+        setInterval(checkServerHealth, 30000);
+
+        // Initialize stats counter animation
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        const isPercentage = finalValue.includes('%');
+                        const isKPlus = finalValue.includes('K+');
+                        const isSlash = finalValue.includes('/');
+                        
+                        let numericValue = parseFloat(finalValue.replace(/[^0-9.]/g, ''));
+                        let current = 0;
+                        const increment = numericValue / 60;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= numericValue) {
+                                current = numericValue;
+                                clearInterval(timer);
+                            }
+                            
+                            let displayValue = Math.floor(current);
+                            if (isPercentage) displayValue += '%';
+                            else if (isKPlus) displayValue += 'K+';
+                            else if (isSlash) displayValue = '24/7';
+                            
+                            target.textContent = displayValue;
+                        }, 50);
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        // Initialize stats animation
+        animateStats();
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        document.getElementById('qrBtn').click();
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        document.getElementById('pairBtn').click();
+                        break;
+                }
+            }
+        });
+
+        // Show keyboard shortcuts hint
+        setTimeout(() => {
+            console.log(`
+                🎮 Keyboard Shortcuts:
+                Ctrl/Cmd + 1: QR Code Pairing
+                Ctrl/Cmd + 2: SMS Pair Code
+            `);
+        }, 3000);
+    </script>
+</body>
+</html>
