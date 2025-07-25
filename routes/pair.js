@@ -208,7 +208,7 @@ const path = require('path');
 const { exec } = require('child_process');
 const pino = require('pino');
 const { Boom } = require('@hapi/boom');
-const { upload } = require('./utils/mega');
+const { upload } = require('../utils/mega');
 
 const {
     default: makeWASocket,
@@ -220,7 +220,7 @@ const {
 } = require('@whiskeysockets/baileys');
 
 const router = express.Router();
-const AUTH_DIR = path.join(__dirname, 'auth_info_baileys');
+const AUTH_DIR = path.join(__dirname, '..', 'auth_info_baileys');
 
 const MESSAGE = process.env.MESSAGE || `
 🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
