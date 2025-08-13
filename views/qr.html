@@ -1,337 +1,248 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Scanner | Kaisen-MD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Scanner | Kaisen-MD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root{
+      --pink:#ffc2e1;
+      --pink-strong:#ff7aa2;
+      --blue:#c2e9fb;
+      --blue-strong:#6aa9ff;
+      --yellow:#fff6a5;
+      --yellow-strong:#ffd166;
+      --red:#ffb3ba;
+      --bg1:#ff9a9e;
+      --bg2:#fecfef;
+      --bg3:#a1c4fd;
+      --bg4:#c2ffd8;
+      --bg5:#f6d365;
+      --bg6:#fda085;
+      --glass: rgba(255,255,255,0.45);
+      --glass-border: rgba(255,255,255,0.35);
+      --text:#1a1a1a;
+      --text-soft:#333;
+      --shadow: 0 10px 30px rgba(0,0,0,.12);
+      --shadow-strong: 0 20px 40px rgba(0,0,0,.18);
+      --radius: 22px;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(-45deg, #000000, #001133, #003366, #000000);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            min-height: 100vh;
-            color: white;
-        }
+    *{margin:0;padding:0;box-sizing:border-box}
 
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    body{
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background: linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4),var(--bg5),var(--bg6));
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    .container{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:28px;
+    }
 
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
+    .header{ text-align:center; margin-bottom:34px; }
+    .header h1{
+      font-size:2.6rem;font-weight:800;letter-spacing:.5px;line-height:1.1;
+      background: linear-gradient(90deg,var(--pink-strong),var(--blue-strong),var(--yellow-strong));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      filter: drop-shadow(0 4px 18px rgba(0,0,0,.12));
+      margin-bottom:10px;
+    }
+    .header p{ color:var(--text-soft); font-size:1.05rem; opacity:.9 }
 
-        .header p {
-            color: #cccccc;
-            font-size: 1.1rem;
-        }
+    .qr-container{
+      width:100%; max-width:560px; padding:38px; border-radius:var(--radius);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .qr-container:hover{ transform: translateY(-3px); box-shadow: var(--shadow-strong); }
 
-        .qr-container {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-            max-width: 500px;
-            width: 100%;
-        }
+    .qr-display{
+      width:320px;height:320px;margin:0 auto 18px;border-radius:18px;
+      background: #fff; display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .qr-display img{ width:90%; height:90%; object-fit:contain }
 
-        .qr-display {
-            width: 300px;
-            height: 300px;
-            margin: 0 auto 20px;
-            background: white;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
+    .loading-spinner{ width:54px;height:54px;border:4px solid rgba(0,0,0,.08); border-top:4px solid var(--blue-strong); border-radius:50%; animation:spin 1s linear infinite }
+    @keyframes spin{ to{ transform: rotate(360deg) } }
 
-        .qr-display img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-        }
+    .status-message{ margin:14px 0 4px; font-size:1.05rem; min-height:28px; font-weight:600 }
+    .status-success{ color:#0a7e6b }
+    .status-error{ color:#b00020 }
+    .status-info{ color:#0d47a1 }
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e3e3e3;
-            border-top: 4px solid #3a86ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+    .buttons{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:8px }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    .btn{
+      --btn-bg: linear-gradient(135deg,var(--blue-strong),#2a77ff);
+      --btn-bg-hover: linear-gradient(135deg,#3d87ff,#1b5cff);
+      background: var(--btn-bg); color:#fff; border:none; padding:14px 22px; border-radius:14px; font-size:1rem; font-weight:700; cursor:pointer; transition: all .25s ease; box-shadow: 0 10px 20px rgba(42,119,255,.25)
+    }
+    .btn:hover{ transform: translateY(-2px) scale(1.02); background: var(--btn-bg-hover); box-shadow:0 14px 24px rgba(42,119,255,.28) }
+    .btn:disabled{ opacity:.65; transform:none; cursor:not-allowed; box-shadow:none }
 
-        .status-message {
-            margin: 20px 0;
-            font-size: 1.1rem;
-            min-height: 30px;
-        }
+    .btn-back{
+      --btn-bg: linear-gradient(135deg,#8e9eab,#596a72);
+      --btn-bg-hover: linear-gradient(135deg,#7f8c8d,#4b5a61);
+      box-shadow: 0 10px 20px rgba(0,0,0,.15);
+    }
 
-        .status-success {
-            color: #00ffcc;
-        }
+    .instructions{
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px; padding:18px; margin-top:22px; text-align:left; color:var(--text);
+    }
+    .instructions h3{ color:#0d47a1; margin-bottom:10px; font-size:1.05rem }
+    .instructions ol{ padding-left:22px }
+    .instructions li{ margin-bottom:8px; color:var(--text-soft) }
 
-        .status-error {
-            color: #ff4d4d;
-        }
+    .error-display{ color:#b00020; font-size:1.1rem; display:flex; flex-direction:column; align-items:center; gap:8px }
 
-        .status-info {
-            color: #3a86ff;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #3a86ff, #0066cc);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin: 10px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-back {
-            background: linear-gradient(135deg, #666, #444);
-        }
-
-        .instructions {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: left;
-        }
-
-        .instructions h3 {
-            color: #3a86ff;
-            margin-bottom: 15px;
-        }
-
-        .instructions ol {
-            padding-left: 20px;
-        }
-
-        .instructions li {
-            margin-bottom: 8px;
-            color: #cccccc;
-        }
-
-        .error-display {
-            color: #ff4d4d;
-            font-size: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .qr-display {
-                width: 250px;
-                height: 250px;
-            }
-
-            .qr-container {
-                padding: 30px 20px;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    @media (max-width:600px){
+      .qr-display{ width:260px; height:260px }
+      .qr-container{ padding:28px 20px }
+      .header h1{ font-size:2.1rem }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔍 QR Code Scanner</h1>
-            <p>Scan the QR code with your WhatsApp to connect</p>
-        </div>
-
-        <div class="qr-container">
-            <div class="qr-display" id="qrDisplay">
-                <div class="loading-spinner"></div>
-            </div>
-
-            <div class="status-message" id="statusMessage">
-                Generating QR Code...
-            </div>
-
-            <div class="buttons">
-                <button class="btn" id="refreshBtn" onclick="refreshQR()">
-                    <i class="fas fa-refresh"></i> Refresh QR
-                </button>
-                <button class="btn btn-back" onclick="window.location.href='/'">
-                    <i class="fas fa-arrow-left"></i> Back to Home
-                </button>
-            </div>
-
-            <div class="instructions">
-                <h3>📱 How to Scan:</h3>
-                <ol>
-                    <li>Open WhatsApp on your phone</li>
-                    <li>Tap the three dots menu (⋮) in the top right</li>
-                    <li>Select "Linked devices"</li>
-                    <li>Tap "Link a device"</li>
-                    <li>Point your camera at the QR code above</li>
-                </ol>
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h1>🔍 QR Code Scanner</h1>
+      <p>Scan the QR code with your WhatsApp to connect</p>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
-    <script>
-        let currentSessionId = null;
-        let isGenerating = false;
+    <div class="qr-container">
+      <div class="qr-display" id="qrDisplay">
+        <div class="loading-spinner"></div>
+      </div>
 
-        function setStatus(message, type = 'info') {
-            const statusElement = document.getElementById('statusMessage');
-            statusElement.textContent = message;
-            statusElement.className = `status-message status-${type}`;
+      <div class="status-message status-info" id="statusMessage">Generating QR Code...</div>
+
+      <div class="buttons">
+        <button class="btn" id="refreshBtn" onclick="refreshQR()">
+          <i class="fas fa-rotate"></i> Refresh QR
+        </button>
+        <button class="btn btn-back" onclick="window.location.href='/'">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </button>
+      </div>
+
+      <div class="instructions">
+        <h3>📱 How to Scan:</h3>
+        <ol>
+          <li>Open WhatsApp on your phone</li>
+          <li>Tap the three dots menu (⋮) in the top right</li>
+          <li>Select "Linked devices"</li>
+          <li>Tap "Link a device"</li>
+          <li>Point your camera at the QR code above</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+  <script>
+    let currentSessionId = null;
+    let isGenerating = false;
+
+    function setStatus(message, type = 'info') {
+      const statusElement = document.getElementById('statusMessage');
+      statusElement.textContent = message;
+      statusElement.className = `status-message status-${type}`;
+    }
+
+    async function generateQR() {
+      if (isGenerating) return;
+
+      isGenerating = true;
+      const qrDisplay = document.getElementById('qrDisplay');
+      const refreshBtn = document.getElementById('refreshBtn');
+
+      try {
+        setStatus('Connecting to WhatsApp servers...', 'info');
+        qrDisplay.innerHTML = '<div class="loading-spinner"></div>';
+        refreshBtn.disabled = true;
+
+        const response = await axios.get('/qr', { timeout: 45000 });
+
+        if (response.data && response.data.success && response.data.qr) {
+          currentSessionId = response.data.sessionId;
+          qrDisplay.innerHTML = `<img src="${response.data.qr}" alt="QR Code" />`;
+          setStatus('QR Code ready! Scan with WhatsApp', 'success');
+
+          setTimeout(() => {
+            if (currentSessionId === response.data.sessionId) {
+              refreshQR();
+            }
+          }, 45000);
+        } else {
+          throw new Error(response.data?.error || 'Invalid response from server');
+        }
+      } catch (error) {
+        console.error('QR generation error:', error);
+
+        let errorMessage = 'Failed to generate QR code. Please try again.';
+        if (error.code === 'ECONNABORTED') {
+          errorMessage = 'Connection timeout. Please try again.';
+        } else if (error.response?.data?.error) {
+          errorMessage = error.response.data.error;
         }
 
-        async function generateQR() {
-            if (isGenerating) return;
-            
-            isGenerating = true;
-            const qrDisplay = document.getElementById('qrDisplay');
-            const refreshBtn = document.getElementById('refreshBtn');
+        setStatus(errorMessage, 'error');
+        qrDisplay.innerHTML = `
+          <div class="error-display">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Error</span>
+          </div>
+        `;
+      } finally {
+        isGenerating = false;
+        refreshBtn.disabled = false;
+      }
+    }
 
-            try {
-                setStatus('Connecting to WhatsApp servers...', 'info');
-                qrDisplay.innerHTML = '<div class="loading-spinner"></div>';
-                refreshBtn.disabled = true;
+    function refreshQR() {
+      if (currentSessionId) {
+        axios.delete(`/qr/cleanup/${currentSessionId}`).catch(console.error);
+        currentSessionId = null;
+      }
+      generateQR();
+    }
 
-                const response = await axios.get('/qr', {
-                    timeout: 45000 // 45 second timeout
-                });
+    window.addEventListener('load', () => {
+      setTimeout(generateQR, 500);
+    });
 
-                if (response.data && response.data.success && response.data.qr) {
-                    currentSessionId = response.data.sessionId;
-                    qrDisplay.innerHTML = `<img src="${response.data.qr}" alt="QR Code" />`;
-                    setStatus('QR Code ready! Scan with WhatsApp', 'success');
+    window.addEventListener('beforeunload', () => {
+      if (currentSessionId) {
+        navigator.sendBeacon(`/qr/cleanup/${currentSessionId}`);
+      }
+    });
 
-                    // Auto refresh after 45 seconds (QR codes expire)
-                    setTimeout(() => {
-                        if (currentSessionId === response.data.sessionId) {
-                            refreshQR();
-                        }
-                    }, 45000);
-                } else {
-                    throw new Error(response.data?.error || 'Invalid response from server');
-                }
-            } catch (error) {
-                console.error('QR generation error:', error);
-                
-                let errorMessage = 'Failed to generate QR code. Please try again.';
-                if (error.code === 'ECONNABORTED') {
-                    errorMessage = 'Connection timeout. Please try again.';
-                } else if (error.response?.data?.error) {
-                    errorMessage = error.response.data.error;
-                }
-                
-                setStatus(errorMessage, 'error');
-                qrDisplay.innerHTML = `
-                    <div class="error-display">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>Error</span>
-                    </div>
-                `;
-            } finally {
-                isGenerating = false;
-                refreshBtn.disabled = false;
-            }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (currentSessionId) {
+          axios.delete(`/qr/cleanup/${currentSessionId}`).catch(console.error);
         }
-
-        function refreshQR() {
-            // Cleanup current session if exists
-            if (currentSessionId) {
-                axios.delete(`/qr/cleanup/${currentSessionId}`).catch(console.error);
-                currentSessionId = null;
-            }
-            generateQR();
+      } else {
+        if (!isGenerating) {
+          refreshQR();
         }
-//
-        // Initialize QR generation when page loads
-        window.addEventListener('load', () => {
-            setTimeout(generateQR, 500); // Small delay to ensure page is fully loaded
-        });
-
-        // Cleanup when page unloads
-        window.addEventListener('beforeunload', () => {
-            if (currentSessionId) {
-                navigator.sendBeacon(`/qr/cleanup/${currentSessionId}`);
-            }
-        });
-
-        // Handle visibility change (when user switches tabs)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // User switched away from tab
-                if (currentSessionId) {
-                    axios.delete(`/qr/cleanup/${currentSessionId}`).catch(console.error);
-                }
-            } else {
-                // User came back to tab
-                if (!isGenerating) {
-                    refreshQR();
-                }
-            }
-        });
-    </script>
+      }
+    });
+  </script>
 </body>
 </html>

