@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
-const gal = 'koyel 12 vatari 😂 👅💦🫵🤣'
+const gal = 'koyel 12 vatari 😂 👅💦🫵🤣';
 
 const MESSAGE = process.env.MESSAGE || `
 ╭─❍ *𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 ✅*
