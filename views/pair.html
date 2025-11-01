@@ -1,20 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phone Pairing | ALI-MD WhatsApp Bot</title>
+    <title>Phone Pairing | Premium Session Generator</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --whatsapp-green: #25D366;
-            --whatsapp-dark: #128C7E;
-            --whatsapp-teal: #075E54;
+            --primary-green: #25D366;
+            --primary-dark: #128C7E;
+            --primary-teal: #075E54;
             --bg-primary: #0a0e27;
             --bg-secondary: #1a1f3a;
-            --accent-pink: #ff6b9d;
             --accent-blue: #4facfe;
             --accent-purple: #9d50bb;
             --glass: rgba(255, 255, 255, 0.08);
@@ -26,9 +26,15 @@
             --error: #ef4444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
         
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
@@ -39,76 +45,18 @@
             overflow-x: hidden;
         }
 
-        body::before,
-        body::after {
+        body::before {
             content: '';
             position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.6;
-            animation: float 15s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        body::before {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(37, 211, 102, 0.3), transparent 70%);
-            top: -250px;
-            right: -250px;
-        }
-
-        body::after {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(79, 172, 254, 0.25), transparent 70%);
-            bottom: -200px;
-            left: -200px;
-            animation-delay: 2s;
-            animation-duration: 18s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(37, 211, 102, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(79, 172, 254, 0.08) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: rise 15s linear infinite;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(1);
-                opacity: 0;
-            }
         }
 
         .container {
@@ -120,6 +68,14 @@
             justify-content: center;
             min-height: 100vh;
             padding: 40px 20px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .card {
@@ -131,9 +87,18 @@
             max-width: 560px;
             width: 100%;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
             position: relative;
             overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .card::before {
@@ -143,23 +108,12 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.7s ease;
         }
 
         .card:hover::before {
             left: 100%;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .header {
@@ -170,24 +124,24 @@
         .icon {
             font-size: 4rem;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-blue));
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-blue));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: bounce 2s ease-in-out infinite;
             display: inline-block;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .icon:hover {
+            transform: scale(1.05);
         }
 
         .header h1 {
             font-size: 2.2rem;
             font-weight: 800;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-purple));
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-purple));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -217,11 +171,11 @@
             padding: 8px;
             border-radius: 18px;
             border: 2px solid transparent;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .input-group:focus-within {
-            border-color: var(--whatsapp-green);
+            border-color: var(--primary-green);
             box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.1), 0 10px 30px rgba(0, 0, 0, 0.2);
             background: var(--glass);
         }
@@ -235,6 +189,11 @@
             font-size: 1.1rem;
             padding: 16px;
             font-family: 'Inter', sans-serif;
+            transition: transform 0.3s ease;
+        }
+
+        .input-group input:focus {
+            transform: scale(1.01);
         }
 
         .input-group input::placeholder {
@@ -243,7 +202,7 @@
         }
 
         .btn-generate {
-            background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-dark));
             color: white;
             border: none;
             padding: 16px 28px;
@@ -256,7 +215,7 @@
             justify-content: center;
             gap: 10px;
             min-width: 150px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
             position: relative;
             overflow: hidden;
@@ -272,7 +231,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            transition: width 0.6s ease, height 0.6s ease;
         }
 
         .btn-generate:hover::before {
@@ -314,7 +273,24 @@
             font-weight: 600;
             text-align: center;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+
+        #status-message:not(:empty) {
+            opacity: 1;
+            animation: fadeInScale 0.4s ease;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .status-success { color: var(--success); }
@@ -328,12 +304,12 @@
 
         .code-display {
             background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(18, 140, 126, 0.3));
-            border: 2px solid var(--whatsapp-green);
+            border: 2px solid var(--primary-green);
             color: var(--text-primary);
             padding: 25px;
             border-radius: 18px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Courier New', monospace;
             font-size: 1.15rem;
             font-weight: 700;
@@ -342,23 +318,8 @@
             box-shadow: 0 15px 40px rgba(37, 211, 102, 0.2);
             position: relative;
             overflow: hidden;
-        }
-
-        .code-display::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            opacity: 0;
+            animation: fadeInScale 0.5s ease forwards;
         }
 
         .code-display:hover {
@@ -405,10 +366,12 @@
             padding: 20px;
             margin-top: 30px;
             backdrop-filter: blur(20px);
+            opacity: 0;
+            animation: fadeInScale 0.6s ease 0.4s forwards;
         }
 
         .info-box h4 {
-            color: var(--whatsapp-green);
+            color: var(--primary-green);
             margin-bottom: 15px;
             font-size: 1.1rem;
             display: flex;
@@ -428,11 +391,17 @@
             padding-left: 24px;
             position: relative;
             line-height: 1.5;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .info-box li:hover {
+            transform: translateX(5px);
+            color: var(--text-primary);
         }
 
         .info-box li::before {
             content: '✓';
-            color: var(--whatsapp-green);
+            color: var(--primary-green);
             position: absolute;
             left: 0;
             font-weight: bold;
@@ -478,16 +447,14 @@
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-
     <div class="container">
         <div class="card">
             <div class="header">
                 <div class="icon">
                     <i class="fas fa-mobile-screen-button"></i>
                 </div>
-                <h1>ALI-MD Phone Pairing</h1>
-                <p>Enter your WhatsApp number to generate a secure pairing code for your bot</p>
+                <h1>Phone Pairing</h1>
+                <p>Enter your phone number to generate a secure pairing code</p>
             </div>
 
             <div class="input-container">
@@ -535,16 +502,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
     <script>
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
-
         const numberInput = document.getElementById("number");
         const submitBtn = document.getElementById("submit");
         const statusMessage = document.getElementById("status-message");
@@ -601,10 +558,10 @@
                         <div style="position: relative; z-index: 1;">
                             <i class="fas fa-check-circle"></i> Code Copied!
                         </div>
-                        <div class="copy-hint">Paste this code in WhatsApp</div>
+                        <div class="copy-hint">Paste this code in your application</div>
                     `;
                     codeDiv.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.4))';
-                    codeDiv.style.borderColor = var('--success');
+                    codeDiv.style.borderColor = 'var(--success)';
                 } else {
                     codeDiv.innerHTML = `
                         <div style="position: relative; z-index: 1;">
@@ -618,7 +575,7 @@
                 setTimeout(() => {
                     codeDiv.innerHTML = originalHTML;
                     codeDiv.style.background = 'linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(18, 140, 126, 0.3))';
-                    codeDiv.style.borderColor = 'var(--whatsapp-green)';
+                    codeDiv.style.borderColor = 'var(--primary-green)';
                 }, 2000);
             };
             
@@ -642,7 +599,7 @@
             }
             
             setLoading(true);
-            showStatus("🔄 Connecting to WhatsApp servers...", "info");
+            showStatus("🔄 Connecting to server...", "info");
             result.innerHTML = "";
             
             try {
