@@ -3,180 +3,553 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>𝐊ąìʂҽղ-𝐌𝐃 | Fast Pairing</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥰</text></svg>">
+  <title>ALI-MD Pairing | Premium WhatsApp Bot</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💚</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      /* New pastel & neon palette */
-      --pink: #ffc2e1;
-      --pink-strong: #ff7aa2;
-      --blue: #c2e9fb;
-      --blue-strong: #6aa9ff;
-      --yellow: #fff6a5;
-      --yellow-strong: #ffd166;
-      --red: #ffb3ba;
-      --bg1: #ff9a9e; /* pink */
-      --bg2: #fecfef; /* soft pink */
-      --bg3: #a1c4fd; /* light blue */
-      --bg4: #c2ffd8; /* mint */
-      --bg5: #f6d365; /* warm yellow */
-      --bg6: #fda085; /* peach */
-      --glass: rgba(255,255,255,0.45);
-      --glass-border: rgba(255,255,255,0.35);
-      --text: #1a1a1a;
-      --text-soft: #333;
-      --primary: var(--pink-strong);
-      --secondary: var(--blue-strong);
-      --muted: var(--text-soft);
+      --whatsapp-green: #25D366;
+      --whatsapp-dark: #128C7E;
+      --whatsapp-light: #DCF8C6;
+      --bg-primary: #0a0e27;
+      --bg-secondary: #1a1f3a;
+      --accent-pink: #ff6b9d;
+      --accent-blue: #4facfe;
+      --accent-purple: #9d50bb;
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --text-primary: #ffffff;
+      --text-secondary: #b8c5d6;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    
     body {
-      font-family: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
-      background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3), var(--bg4));
-      background-size: 300% 300%;
-      animation: gradientShift 15s ease infinite;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1535 100%);
+      position: relative;
     }
 
-    /* Background video overlay */
-    .video-bg {
-      position: fixed; inset: 0; z-index: -2; overflow: hidden;
-    }
-    .video-bg video {
-      position: absolute; min-width: 100%; min-height: 100%;
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      filter: brightness(.5) contrast(1.05) saturate(1.1);
-      object-fit: cover;
-    }
-    .overlay {
-      position: fixed; inset: 0; z-index: -1;
-      background: linear-gradient(180deg, rgba(255,255,255,.2), rgba(255,255,255,.05));
-      backdrop-filter: blur(5px);
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(37, 211, 102, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(74, 172, 254, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(157, 80, 187, 0.1) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    /* Layout */
-    .container { max-width: 1100px; margin: 0 auto; padding: 72px 20px 56px; }
-    header { text-align: center; margin: 48px auto 28px; }
-    .logo { font-size: 3.5rem; margin-bottom: 12px; color: var(--primary); }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      text-align: center;
+      margin: 60px auto 50px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 5rem;
+      animation: bounce 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(37, 211, 102, 0.6));
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
     .title {
-      font-family: 'Orbitron', monospace; letter-spacing: 1.5px;
-      font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;
-      background: linear-gradient(45deg, var(--pink-strong), var(--blue-strong), var(--yellow-strong), var(--red));
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #25D366, #4facfe, #ff6b9d);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
-    .subtitle { color: var(--text-soft); margin-top: 10px; font-size: 1.05rem; }
 
-    /* Glass Card */
-    .glass {
-      background: var(--glass); border: 1px solid var(--glass-border);
-      backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,.2);
-    }
-
-    /* Status */
-    .status {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border-radius: 999px;
-      background: rgba(255, 255, 255, 0.6); color: var(--primary);
-      font-weight: 600; border: 1px solid var(--glass-border);
-    }
-    .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--primary); box-shadow: 0 0 12px var(--primary); }
-
-    /* Actions */
-    .actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 28px 0 36px; }
-    .btn {
-      position: relative; display: inline-flex; align-items: center; gap: 10px;
-      padding: 16px 22px; font-weight: 700; text-decoration: none; color: white; border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12); transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .btn:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,.25); }
-    .btn-qr { background: linear-gradient(135deg, var(--blue), var(--blue-strong)); color: var(--text); }
-    .btn-code { background: linear-gradient(135deg, var(--pink), var(--pink-strong)); color: var(--text); }
-    .btn-scroll { background: linear-gradient(135deg, var(--yellow), var(--yellow-strong)); color: var(--text); }
-
-    /* Sections */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 18px; }
-    .card { padding: 22px; text-align: center; }
-    .card h3 { font-size: 1.1rem; margin: 10px 0 6px; color: var(--primary); }
-    .card p { color: var(--text-soft); font-size: .95rem; line-height: 1.5; }
-    .card i { font-size: 1.8rem; color: var(--secondary); }
-
-    /* Footer */
-    footer { text-align: center; margin: 48px auto 16px; color: var(--text-soft); font-size: .95rem; }
-
-    /* Animations */
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
+      0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
-    /* Mobile */
-    @media (max-width: 520px){ .btn { width: 100%; justify-content: center; } }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      margin: 20px auto;
+      max-width: 600px;
+      line-height: 1.6;
+      animation: fadeIn 1s ease 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      margin-top: 20px;
+      border-radius: 50px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      color: var(--whatsapp-green);
+      font-weight: 600;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      50% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--whatsapp-green);
+      box-shadow: 0 0 15px var(--whatsapp-green);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 50px 0;
+    }
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      color: white;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-qr {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-code {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+    }
+
+    .btn-scroll {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 30px 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: scale(1.05);
+    }
+
+    .feature-card i {
+      font-size: 3rem;
+      background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      display: block;
+      animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .feature-card:nth-child(even) i {
+      animation-direction: reverse;
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 50px;
+      background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    footer {
+      text-align: center;
+      margin: 80px auto 30px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      animation: fadeIn 1s ease 0.5s both;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-link:hover {
+      color: var(--whatsapp-green);
+    }
+
+    @media (max-width: 768px) {
+      .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 28px;
+      }
+
+      .actions {
+        gap: 15px;
+      }
+
+      .glass-card {
+        padding: 30px 20px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="video-bg" aria-hidden="true">
-    <video id="bgVideo" autoplay muted loop playsinline preload="auto">
-      <source src="./video.mp4" />
-    </video>
-  </div>
-  <div class="overlay" aria-hidden="true"></div>
+  <div class="stars" id="stars"></div>
+
   <div class="container">
     <header>
-      <div class="logo"><i class="fas fa-robot"></i></div>
-      <h1 class="title">𝐊ąìʂҽղ-𝐌𝐃</h1>
-      <p class="subtitle">Advanced WhatsApp Bot Pairing — fast, secure, beautiful.</p>
-      <div class="status glass"><span class="dot"></span> Server Online & Ready</div>
+      <div class="logo-container">
+        <div class="logo">💚</div>
+      </div>
+      <h1 class="title">ALI-MD PAIRING</h1>
+      <p class="subtitle">Next-Generation WhatsApp Bot Deployment Platform | Secure, Fast & Professional</p>
+      <div class="status">
+        <span class="dot"></span>
+        <span>Server Online</span>
+      </div>
+
       <div class="actions">
-        <a class="btn btn-qr" href="qr-scanner"><i class="fas fa-qrcode"></i> Pair via QR</a>
-        <a class="btn btn-code" href="pair"><i class="fas fa-mobile-alt"></i> Pair via Code</a>
-        <a class="btn btn-scroll" href="#features"><i class="fas fa-arrow-down"></i> Learn more</a>
+        <a class="btn btn-qr" href="qr-scanner">
+          <i class="fas fa-qrcode"></i>
+          <span>QR Code Pairing</span>
+        </a>
+        <a class="btn btn-code" href="pair">
+          <i class="fas fa-mobile-alt"></i>
+          <span>Phone Pairing</span>
+        </a>
+        <a class="btn btn-scroll" href="#features">
+          <i class="fas fa-arrow-down"></i>
+          <span>Explore Features</span>
+        </a>
       </div>
     </header>
 
-    <section id="features" class="glass card" style="margin-bottom: 22px;">
-      <div class="grid">
-        <div class="card">
-          <i class="fas fa-qrcode"></i>
-          <h3>QR Pairing</h3>
-          <p>Scan once with WhatsApp camera. Instant, encrypted, no fuss.</p>
+    <section id="features">
+      <h2 class="section-title">Why Choose ALI-MD?</h2>
+      
+      <div class="glass-card">
+        <div class="grid">
+          <div class="feature-card">
+            <i class="fab fa-whatsapp"></i>
+            <h3>WhatsApp Integration</h3>
+            <p>Seamless integration with WhatsApp using the latest Baileys library. Connect your bot in seconds with QR or phone pairing.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-qrcode"></i>
+            <h3>Quick QR Pairing</h3>
+            <p>Instant QR code generation for fast pairing. Scan with WhatsApp camera and get your session ID directly in your chat.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-mobile-screen-button"></i>
+            <h3>Phone Code Pairing</h3>
+            <p>Enter your phone number to receive an 8-digit pairing code. Secure SMS-free pairing method for WhatsApp bots.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-shield-halved"></i>
+            <h3>Secure & Private</h3>
+            <p>End-to-end encrypted sessions with automatic cleanup. Your credentials are safe and never stored permanently.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <h3>Easy Deployment</h3>
+            <p>Deploy your WhatsApp bot on Heroku, Railway, Render, Koyeb, or any VPS. Full deployment support included.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-rocket"></i>
+            <h3>Lightning Fast</h3>
+            <p>Optimized for speed with automatic session management. Get your bot running in under 30 seconds.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 Support</h3>
+            <p>Active community support and documentation. Join our WhatsApp channel for updates and assistance.</p>
+          </div>
+
+          <div class="feature-card">
+            <i class="fas fa-code-branch"></i>
+            <h3>Open Source</h3>
+            <p>Fully open-source codebase on GitHub. Contribute, customize, and build your perfect WhatsApp bot solution.</p>
+          </div>
         </div>
-        <div class="card">
-          <i class="fas fa-mobile-alt"></i>
-          <h3>Pair Code (SMS)</h3>
-          <p>Enter your phone number to receive a secure 8-digit code.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-shield-alt"></i>
-          <h3>Secure by Default</h3>
-          <p>End-to-end pairing with hardened session handling.</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-rocket"></i>
-          <h3>Deploy Support</h3>
-          <p>Deploy on Railway, Heroku, VPS and more.</p>
+      </div>
+
+      <div class="glass-card" style="margin-top: 40px; text-align: center;">
+        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--text-primary);">
+          <i class="fas fa-bolt" style="color: var(--whatsapp-green);"></i>
+          Get Started in 3 Easy Steps
+        </h3>
+        <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
+            <strong style="color: var(--whatsapp-green);">1.</strong> Choose your pairing method (QR or Phone Code)
+          </p>
+          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
+            <strong style="color: var(--whatsapp-green);">2.</strong> Complete the pairing process with WhatsApp
+          </p>
+          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
+            <strong style="color: var(--whatsapp-green);">3.</strong> Receive your session ID and deploy your bot
+          </p>
         </div>
       </div>
     </section>
 
     <footer>
-      <p>© <span id="year"></span> Kaisen-MD. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/ALI-INXIDE/ALI-MD" target="_blank" class="footer-link">
+          <i class="fab fa-github"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h" target="_blank" class="footer-link">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp Channel</span>
+        </a>
+        <a href="#features" class="footer-link">
+          <i class="fas fa-info-circle"></i>
+          <span>Documentation</span>
+        </a>
+      </div>
+      <p style="margin-top: 20px;">&copy; <span id="year"></span> ALI-MD. All rights reserved.</p>
+      <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">Premium WhatsApp Bot Pairing Platform</p>
     </footer>
   </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    const bg = document.getElementById('bgVideo');
-    document.addEventListener('visibilitychange',()=>{
-      if(document.hidden){ try{bg.pause()}catch(e){} } else { try{bg.play()}catch(e){} }
+
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
     });
   </script>
 </body>
