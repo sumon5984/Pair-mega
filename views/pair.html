@@ -166,42 +166,6 @@
       text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
     }
 
-    .mode-toggle {
-      display: flex;
-      background: var(--background-color);
-      border-radius: 14px;
-      padding: 5px;
-      margin-bottom: 25px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
-      border: 1.5px solid var(--border-color);
-    }
-
-    .mode-btn {
-      flex: 1;
-      padding: 13px;
-      text-align: center;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    .mode-btn:hover:not(.active) {
-      background: var(--hover-color);
-      color: var(--text-color);
-    }
-
-    .mode-btn.active {
-      background: var(--primary-color);
-      color: var(--secondary-color);
-      box-shadow: var(--neon-glow);
-      transform: scale(1.02);
-    }
-
     .social-icons {
       display: flex;
       justify-content: center;
@@ -231,20 +195,6 @@
       border-color: var(--primary-color);
       box-shadow: 0 0 15px rgba(0, 247, 255, 0.6);
       color: var(--primary-color);
-    }
-
-    .content-section {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .content-section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .input-group {
@@ -469,11 +419,6 @@
       <h1 class="title">JawadTechX</h1>
       <p class="subtitle">Connect your WhatsApp account</p>
       
-      <div class="mode-toggle">
-        <button class="mode-btn active" data-mode="pair1">Pair-1</button>
-        <button class="mode-btn" data-mode="pair2">Pair-2</button>
-      </div>
-      
       <div class="social-icons">
         <a href="https://www.youtube.com/@JawadTechX" target="_blank" title="YouTube">
           <i class="fab fa-youtube"></i>
@@ -490,53 +435,27 @@
       </div>
     </div>
 
-    <div class="content-section active" id="pair1-section">
-      <div class="input-group">
-        <label class="input-label">Enter your WhatsApp number with country code</label>
-        <input type="tel" id="mobileNumber1" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
-        <p class="input-hint">Example: 923427582273 (92 for Pakistan)</p>
-      </div>
-
-      <button class="generate-btn" id="submit1">
-        <i class="fas fa-key"></i> Generate Pair-1 Code
-      </button>
-
-      <div class="loading" id="loading1">
-        <i class="fas fa-spinner"></i>
-      </div>
-
-      <div class="code-display" id="codeDisplay1">
-        Your pair code will appear here
-      </div>
-
-      <button class="copy-btn" id="copy1">
-        <i class="fas fa-copy"></i> Copy Code
-      </button>
+    <div class="input-group">
+      <label class="input-label">Enter your WhatsApp number with country code</label>
+      <input type="tel" id="mobileNumber" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
+      <p class="input-hint">Example: 923427582273 (92 for Pakistan)</p>
     </div>
 
-    <div class="content-section" id="pair2-section">
-      <div class="input-group">
-        <label class="input-label">Enter your WhatsApp number with country code</label>
-        <input type="tel" id="mobileNumber2" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
-        <p class="input-hint">Example: 923427582273 (92 for Pakistan)</p>
-      </div>
+    <button class="generate-btn" id="submit">
+      <i class="fas fa-key"></i> Generate Pairing Code
+    </button>
 
-      <button class="generate-btn" id="submit2">
-        <i class="fas fa-key"></i> Generate Pair-2 Code
-      </button>
-
-      <div class="loading" id="loading2">
-        <i class="fas fa-spinner"></i>
-      </div>
-
-      <div class="code-display" id="codeDisplay2">
-        Your pair code will appear here
-      </div>
-
-      <button class="copy-btn" id="copy2">
-        <i class="fas fa-copy"></i> Copy Code
-      </button>
+    <div class="loading" id="loading">
+      <i class="fas fa-spinner"></i>
     </div>
+
+    <div class="code-display" id="codeDisplay">
+      Your pair code will appear here
+    </div>
+
+    <button class="copy-btn" id="copy">
+      <i class="fas fa-copy"></i> Copy Code
+    </button>
 
     <div class="footer">
       <p>© 2025 JAWAD TECH | KHAN-MD</p>
@@ -547,27 +466,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    document.querySelectorAll('.mode-btn').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.mode-btn').forEach(btn => {
-          btn.classList.remove('active');
-        });
-        this.classList.add('active');
-        
-        const mode = this.getAttribute('data-mode');
-        document.querySelectorAll('.content-section').forEach(section => {
-          section.classList.remove('active');
-        });
-        document.getElementById(`${mode}-section`).classList.add('active');
-      });
-    });
-
-    document.getElementById("submit1").addEventListener("click", async (e) => {
+    document.getElementById("submit").addEventListener("click", async (e) => {
       e.preventDefault();
-      const mobileNumberInput = document.getElementById("mobileNumber1");
-      const codeDisplay = document.getElementById("codeDisplay1");
-      const loadingSpinner = document.getElementById("loading1");
-      const copyBtn = document.getElementById("copy1");
+      const mobileNumberInput = document.getElementById("mobileNumber");
+      const codeDisplay = document.getElementById("codeDisplay");
+      const loadingSpinner = document.getElementById("loading");
+      const copyBtn = document.getElementById("copy");
 
       const mobileNumber = mobileNumberInput.value.trim();
       if (!mobileNumber) {
@@ -581,7 +485,7 @@
       copyBtn.style.display = "none";
 
       try {
-        const response = await axios(`/pair/mega?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
+        const response = await axios(`/code?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
         const code = response.data.code || "Service Unavailable";
         if (code === "Service Unavailable") {
           codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
@@ -597,53 +501,10 @@
       }
     });
 
-    document.getElementById("submit2").addEventListener("click", async (e) => {
-      e.preventDefault();
-      const mobileNumberInput = document.getElementById("mobileNumber2");
-      const codeDisplay = document.getElementById("codeDisplay2");
-      const loadingSpinner = document.getElementById("loading2");
-      const copyBtn = document.getElementById("copy2");
-
-      const mobileNumber = mobileNumberInput.value.trim();
-      if (!mobileNumber) {
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
-        copyBtn.style.display = "none";
-        return;
-      }
-
-      loadingSpinner.style.display = "block";
-      codeDisplay.innerHTML = '';
-      copyBtn.style.display = "none";
-
-      try {
-        const response = await axios(`/pair/base64?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
-        const code = response.data.code || "Service Unavailable";
-        if (code === "Service Unavailable") {
-          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
-        } else {
-          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
-          copyBtn.style.display = "flex";
-        }
-      } catch (error) {
-        console.error("Error generating code:", error);
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code. Please try again.</div>';
-      } finally {
-        loadingSpinner.style.display = "none";
-      }
-    });
-
-    document.getElementById("copy1").addEventListener("click", function() {
-      copyCode("codeDisplay1", "copy1");
-    });
-
-    document.getElementById("copy2").addEventListener("click", function() {
-      copyCode("codeDisplay2", "copy2");
-    });
-
-    function copyCode(displayId, copyBtnId) {
-      const codeDisplay = document.getElementById(displayId).innerText;
+    document.getElementById("copy").addEventListener("click", function() {
+      const codeDisplay = document.getElementById("codeDisplay").innerText;
       const code = codeDisplay.replace('CODE: ', '');
-      const copyBtn = document.getElementById(copyBtnId);
+      const copyBtn = document.getElementById("copy");
 
       navigator.clipboard.writeText(code).then(() => {
         const originalText = copyBtn.innerHTML;
@@ -670,7 +531,7 @@
       }).catch(err => {
         console.error("Failed to copy text: ", err);
       });
-    }
+    });
   </script>
 </body>
 </html>

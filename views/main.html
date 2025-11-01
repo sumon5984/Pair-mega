@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ALI-MD Pairing | Premium WhatsApp Bot</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💚</text></svg>">
+  <title>JawadTechX | WhatsApp Pairing Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --whatsapp-green: #25D366;
-      --whatsapp-dark: #128C7E;
-      --whatsapp-light: #DCF8C6;
-      --bg-primary: #0a0e27;
-      --bg-secondary: #1a1f3a;
-      --accent-pink: #ff6b9d;
-      --accent-blue: #4facfe;
-      --accent-purple: #9d50bb;
+      --primary-color: #00f7ff;
+      --primary-dark: #00c4cc;
+      --primary-light: #33ffff;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
       --glass: rgba(255, 255, 255, 0.08);
       --glass-border: rgba(255, 255, 255, 0.18);
       --text-primary: #ffffff;
       --text-secondary: #b8c5d6;
+      --neon-glow: 0 0 10px rgba(0, 247, 255, 0.8),
+                   0 0 20px rgba(0, 247, 255, 0.6),
+                   0 0 30px rgba(0, 247, 255, 0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +33,7 @@
       color: var(--text-primary);
       min-height: 100vh;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1535 100%);
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1535 100%);
       position: relative;
     }
 
@@ -44,10 +44,9 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(37, 211, 102, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(74, 172, 254, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(157, 80, 187, 0.1) 0%, transparent 50%);
+      background: radial-gradient(circle at 20% 80%, rgba(0, 247, 255, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(0, 247, 255, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 40%, rgba(0, 247, 255, 0.1) 0%, transparent 50%);
       animation: float 20s ease-in-out infinite;
       pointer-events: none;
     }
@@ -72,9 +71,10 @@
       position: absolute;
       width: 2px;
       height: 2px;
-      background: white;
+      background: var(--primary-color);
       border-radius: 50%;
       animation: twinkle 3s infinite;
+      box-shadow: 0 0 3px var(--primary-color);
     }
 
     @keyframes twinkle {
@@ -116,7 +116,7 @@
     .logo {
       font-size: 5rem;
       animation: bounce 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px rgba(37, 211, 102, 0.6));
+      filter: drop-shadow(0 0 20px rgba(0, 247, 255, 0.6));
     }
 
     @keyframes bounce {
@@ -129,7 +129,7 @@
       font-size: clamp(2.5rem, 8vw, 5rem);
       font-weight: 800;
       letter-spacing: 2px;
-      background: linear-gradient(135deg, #25D366, #4facfe, #ff6b9d);
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
       background-size: 200% 200%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -137,6 +137,7 @@
       animation: gradientShift 4s ease infinite;
       margin-bottom: 16px;
       line-height: 1.2;
+      text-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
     }
 
     @keyframes gradientShift {
@@ -168,22 +169,22 @@
       background: var(--glass);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      color: var(--whatsapp-green);
+      color: var(--primary-color);
       font-weight: 600;
       animation: pulse 2s ease-in-out infinite;
     }
 
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-      50% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.7); }
+      50% { box-shadow: 0 0 0 10px rgba(0, 247, 255, 0); }
     }
 
     .dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--whatsapp-green);
-      box-shadow: 0 0 15px var(--whatsapp-green);
+      background: var(--primary-color);
+      box-shadow: 0 0 15px var(--primary-color);
       animation: blink 1.5s ease-in-out infinite;
     }
 
@@ -242,18 +243,18 @@
     }
 
     .btn-qr {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      box-shadow: var(--neon-glow);
     }
 
     .btn-code {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+      box-shadow: var(--neon-glow);
     }
 
     .btn-scroll {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+      box-shadow: var(--neon-glow);
     }
 
     .glass-card {
@@ -302,13 +303,14 @@
 
     .feature-card i {
       font-size: 3rem;
-      background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-blue));
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 20px;
       display: block;
       animation: rotate 3s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.5));
     }
 
     @keyframes rotate {
@@ -338,10 +340,11 @@
       font-size: 2.5rem;
       font-weight: 800;
       margin-bottom: 50px;
-      background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-purple));
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
     }
 
     footer {
@@ -371,7 +374,8 @@
     }
 
     .footer-link:hover {
-      color: var(--whatsapp-green);
+      color: var(--primary-color);
+      text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
     }
 
     @media (max-width: 768px) {
@@ -410,8 +414,9 @@
   <div class="container">
     <header>
       <div class="logo-container">
+        <div class="logo">🤖</div>
       </div>
-      <h1 class="title">ALI-MD PAIRING</h1>
+      <h1 class="title">JAWADTECHX PAIRING</h1>
       <p class="subtitle">Next-Generation WhatsApp Bot Deployment Platform | Secure, Fast & Professional</p>
       <div class="status">
         <span class="dot"></span>
@@ -435,7 +440,7 @@
     </header>
 
     <section id="features">
-      <h2 class="section-title">Why Choose ALI-MD?</h2>
+      <h2 class="section-title">Why Choose JawadTechX?</h2>
       
       <div class="glass-card">
         <div class="grid">
@@ -491,18 +496,18 @@
 
       <div class="glass-card" style="margin-top: 40px; text-align: center;">
         <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--text-primary);">
-          <i class="fas fa-bolt" style="color: var(--whatsapp-green);"></i>
+          <i class="fas fa-bolt" style="color: var(--primary-color);"></i>
           Get Started in 3 Easy Steps
         </h3>
         <div style="text-align: left; max-width: 600px; margin: 0 auto;">
           <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--whatsapp-green);">1.</strong> Choose your pairing method (QR or Phone Code)
+            <strong style="color: var(--primary-color);">1.</strong> Choose your pairing method (QR or Phone Code)
           </p>
           <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--whatsapp-green);">2.</strong> Complete the pairing process with WhatsApp
+            <strong style="color: var(--primary-color);">2.</strong> Complete the pairing process with WhatsApp
           </p>
           <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--whatsapp-green);">3.</strong> Receive your session ID and deploy your bot
+            <strong style="color: var(--primary-color);">3.</strong> Receive your session ID and deploy your bot
           </p>
         </div>
       </div>
@@ -510,11 +515,11 @@
 
     <footer>
       <div class="footer-links">
-        <a href="https://github.com/ALI-INXIDE/ALI-MD" target="_blank" class="footer-link">
+        <a href="https://github.com/JawadYT36/KHAN-MD" target="_blank" class="footer-link">
           <i class="fab fa-github"></i>
           <span>GitHub</span>
         </a>
-        <a href="https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h" target="_blank" class="footer-link">
+        <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j" target="_blank" class="footer-link">
           <i class="fab fa-whatsapp"></i>
           <span>WhatsApp Channel</span>
         </a>
@@ -523,7 +528,7 @@
           <span>Documentation</span>
         </a>
       </div>
-      <p style="margin-top: 20px;">&copy; <span id="year"></span> ALI-MD. All rights reserved.</p>
+      <p style="margin-top: 20px;">&copy; <span id="year"></span> JAWAD TECH | KHAN-MD. All rights reserved.</p>
       <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">Premium WhatsApp Bot Pairing Platform</p>
     </footer>
   </div>
