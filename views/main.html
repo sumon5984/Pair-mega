@@ -1,143 +1,197 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JawadTechX | WhatsApp Pairing Platform</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>ALI-MD | WhatsApp Bot Pairing Platform</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
-      --primary-color: #00f7ff;
-      --primary-dark: #00c4cc;
-      --primary-light: #33ffff;
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #1a1a1a;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.18);
-      --text-primary: #ffffff;
-      --text-secondary: #b8c5d6;
-      --neon-glow: 0 0 10px rgba(0, 247, 255, 0.8),
-                   0 0 20px rgba(0, 247, 255, 0.6),
-                   0 0 30px rgba(0, 247, 255, 0.4);
+      --primary: #00d9ff;
+      --primary-dark: #0099cc;
+      --secondary: #ff006e;
+      --accent: #8338ec;
+      --bg-dark: #0d0221;
+      --bg-darker: #070114;
+      --surface: #1a0f2e;
+      --surface-light: #2a1f3e;
+      --text: #ffffff;
+      --text-muted: #a5b4cb;
+      --success: #06ffa5;
+      --glow: 0 0 20px rgba(0, 217, 255, 0.6),
+              0 0 40px rgba(0, 217, 255, 0.4),
+              0 0 60px rgba(0, 217, 255, 0.2);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 50%, #1a0530 100%);
+      color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1535 100%);
       position: relative;
     }
 
     body::before {
       content: '';
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 20% 80%, rgba(0, 247, 255, 0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(0, 247, 255, 0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(0, 247, 255, 0.1) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      33% { transform: translate(30px, -30px) rotate(120deg); }
-      66% { transform: translate(-20px, 20px) rotate(240deg); }
-    }
-
-    .stars {
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(131, 56, 236, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      animation: pulse 15s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       pointer-events: none;
       z-index: 0;
     }
 
-    .star {
+    .particle {
       position: absolute;
-      width: 2px;
-      height: 2px;
-      background: var(--primary-color);
+      width: 3px;
+      height: 3px;
+      background: var(--primary);
       border-radius: 50%;
-      animation: twinkle 3s infinite;
-      box-shadow: 0 0 3px var(--primary-color);
+      animation: float 20s infinite;
+      box-shadow: 0 0 10px var(--primary);
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 20px;
       position: relative;
       z-index: 1;
     }
 
-    header {
-      text-align: center;
-      margin: 60px auto 50px;
-      animation: fadeInDown 0.8s ease;
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 40px;
     }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .logo-nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
     }
 
-    .logo-container {
+    .logo-icon {
+      font-size: 40px;
+      filter: drop-shadow(0 0 20px var(--primary));
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
       position: relative;
-      display: inline-block;
-      margin-bottom: 24px;
     }
 
-    .logo {
-      font-size: 5rem;
-      animation: bounce 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 20px rgba(0, 247, 255, 0.6));
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+    .nav-link:hover {
+      color: var(--primary);
     }
 
-    .title {
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 800;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 30px;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 217, 255, 0.4); }
+      50% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: gradientShift 4s ease infinite;
-      margin-bottom: 16px;
-      line-height: 1.2;
-      text-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+      animation: gradientShift 5s ease infinite;
     }
 
     @keyframes gradientShift {
@@ -145,77 +199,34 @@
       50% { background-position: 100% 50%; }
     }
 
-    .subtitle {
-      color: var(--text-secondary);
-      font-size: clamp(1rem, 3vw, 1.25rem);
-      margin: 20px auto;
-      max-width: 600px;
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 50px;
       line-height: 1.6;
-      animation: fadeIn 1s ease 0.3s both;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 24px;
-      margin-top: 20px;
-      border-radius: 50px;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      color: var(--primary-color);
-      font-weight: 600;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.7); }
-      50% { box-shadow: 0 0 0 10px rgba(0, 247, 255, 0); }
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--primary-color);
-      box-shadow: 0 0 15px var(--primary-color);
-      animation: blink 1.5s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .actions {
+    .cta-buttons {
       display: flex;
       gap: 20px;
-      flex-wrap: wrap;
       justify-content: center;
-      margin: 50px 0;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
     }
 
     .btn {
-      position: relative;
+      padding: 18px 40px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      padding: 18px 36px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      color: white;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s;
+      position: relative;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1;
     }
 
     .btn::before {
@@ -225,325 +236,346 @@
       left: 50%;
       width: 0;
       height: 0;
-      border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
       transform: translate(-50%, -50%);
       transition: width 0.6s, height 0.6s;
-      z-index: -1;
     }
 
     .btn:hover::before {
-      width: 400px;
-      height: 400px;
+      width: 300px;
+      height: 300px;
     }
 
-    .btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--bg-dark);
+      box-shadow: var(--glow);
     }
 
-    .btn-qr {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-      box-shadow: var(--neon-glow);
+    .btn-primary:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
     }
 
-    .btn-code {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
-      box-shadow: var(--neon-glow);
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--primary);
     }
 
-    .btn-scroll {
-      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-      box-shadow: var(--neon-glow);
+    .btn-secondary:hover {
+      background: var(--surface);
+      transform: translateY(-5px);
     }
 
-    .glass-card {
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeInUp 0.8s ease;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .glass-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-    }
-
-    .grid {
+    .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 30px;
-      margin-top: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      padding: 30px;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 217, 255, 0.2);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .features {
+      padding: 100px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
     }
 
     .feature-card {
-      text-align: center;
-      padding: 30px 20px;
-      transition: transform 0.3s ease;
+      background: var(--surface);
+      padding: 40px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 217, 255, 0.1);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
     }
 
     .feature-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-10px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 60px rgba(0, 217, 255, 0.2);
     }
 
-    .feature-card i {
-      font-size: 3rem;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    .feature-icon {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 20px;
       display: block;
-      animation: rotate 3s linear infinite;
-      filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.5));
     }
 
-    @keyframes rotate {
-      from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--text);
     }
 
-    .feature-card:nth-child(even) i {
-      animation-direction: reverse;
-    }
-
-    .feature-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-      color: var(--text-primary);
-      font-weight: 700;
-    }
-
-    .feature-card p {
-      color: var(--text-secondary);
+    .feature-desc {
+      color: var(--text-muted);
       line-height: 1.6;
-      font-size: 1rem;
     }
 
-    .section-title {
+    .cta-section {
       text-align: center;
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 50px;
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
+      padding: 100px 20px;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+      border-radius: 30px;
+      margin: 50px 0;
+      border: 1px solid rgba(0, 217, 255, 0.2);
     }
 
     footer {
       text-align: center;
-      margin: 80px auto 30px;
-      padding-top: 40px;
+      padding: 60px 20px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-secondary);
-      animation: fadeIn 1s ease 0.5s both;
+      margin-top: 100px;
     }
 
     .footer-links {
       display: flex;
-      gap: 30px;
+      gap: 40px;
       justify-content: center;
-      margin: 20px 0;
+      margin: 30px 0;
       flex-wrap: wrap;
     }
 
     .footer-link {
-      color: var(--text-secondary);
+      color: var(--text-muted);
       text-decoration: none;
-      transition: color 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      transition: all 0.3s;
     }
 
     .footer-link:hover {
-      color: var(--primary-color);
-      text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+      color: var(--primary);
+      transform: translateY(-3px);
     }
 
     @media (max-width: 768px) {
-      .btn {
-        width: 100%;
-        justify-content: center;
-        padding: 16px 28px;
-      }
-
-      .actions {
-        gap: 15px;
-      }
-
-      .glass-card {
-        padding: 30px 20px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      .nav-links { display: none; }
+      .hero { padding: 50px 20px; }
+      .cta-buttons { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <div class="stars" id="stars"></div>
+  <div class="particles" id="particles"></div>
 
   <div class="container">
-    <header>
-      <div class="logo-container">
-        <div class="logo">🤖</div>
+    <nav>
+      <div class="logo-nav">
+        <span class="logo-icon">⚡</span>
+        <span>ALI-MD</span>
       </div>
-      <h1 class="title">JAWADTECHX PAIRING</h1>
-      <p class="subtitle">Next-Generation WhatsApp Bot Deployment Platform | Secure, Fast & Professional</p>
-      <div class="status">
-        <span class="dot"></span>
-        <span>Server Online</span>
-      </div>
-
-      <div class="actions">
-        <a class="btn btn-qr" href="qr-scanner">
-          <i class="fas fa-qrcode"></i>
-          <span>QR Code Pairing</span>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="https://github.com/GlobalTechInfo" target="_blank" class="nav-link">
+          <i class="fab fa-github"></i> GitHub
         </a>
-        <a class="btn btn-code" href="pair">
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="dot" style="width: 10px; height: 10px; background: var(--success); border-radius: 50%; animation: blink 1.5s infinite;"></span>
+        <span>SYSTEM ONLINE</span>
+      </div>
+      
+      <h1 class="hero-title">ALI-MD</h1>
+      <p class="hero-subtitle">
+        Advanced WhatsApp Bot Pairing Platform. Deploy your bot in seconds with our secure, lightning-fast pairing system.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="qr-scanner" class="btn btn-primary">
+          <i class="fas fa-qrcode"></i>
+          <span>Scan QR Code</span>
+        </a>
+        <a href="pair" class="btn btn-secondary">
           <i class="fas fa-mobile-alt"></i>
           <span>Phone Pairing</span>
         </a>
-        <a class="btn btn-scroll" href="#features">
-          <i class="fas fa-arrow-down"></i>
-          <span>Explore Features</span>
-        </a>
       </div>
-    </header>
 
-    <section id="features">
-      <h2 class="section-title">Why Choose JawadTechX?</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">&lt;30s</div>
+          <div class="stat-label">Setup Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <h2 class="section-title">Powerful Features</h2>
       
-      <div class="glass-card">
-        <div class="grid">
-          <div class="feature-card">
-            <i class="fab fa-whatsapp"></i>
-            <h3>WhatsApp Integration</h3>
-            <p>Seamless integration with WhatsApp using the latest Baileys library. Connect your bot in seconds with QR or phone pairing.</p>
-          </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <i class="fas fa-bolt feature-icon"></i>
+          <h3 class="feature-title">Lightning Fast</h3>
+          <p class="feature-desc">Optimized infrastructure ensures your bot connects in under 30 seconds with zero configuration.</p>
+        </div>
 
-          <div class="feature-card">
-            <i class="fas fa-qrcode"></i>
-            <h3>Quick QR Pairing</h3>
-            <p>Instant QR code generation for fast pairing. Scan with WhatsApp camera and get your session ID directly in your chat.</p>
-          </div>
+        <div class="feature-card">
+          <i class="fas fa-shield-alt feature-icon"></i>
+          <h3 class="feature-title">Military-Grade Security</h3>
+          <p class="feature-desc">End-to-end encrypted sessions with automatic cleanup. Your data is never stored permanently.</p>
+        </div>
 
-          <div class="feature-card">
-            <i class="fas fa-mobile-screen-button"></i>
-            <h3>Phone Code Pairing</h3>
-            <p>Enter your phone number to receive an 8-digit pairing code. Secure SMS-free pairing method for WhatsApp bots.</p>
-          </div>
+        <div class="feature-card">
+          <i class="fas fa-qrcode feature-icon"></i>
+          <h3 class="feature-title">Dual Pairing Methods</h3>
+          <p class="feature-desc">Choose between instant QR scanning or secure phone code pairing based on your preference.</p>
+        </div>
 
-          <div class="feature-card">
-            <i class="fas fa-shield-halved"></i>
-            <h3>Secure & Private</h3>
-            <p>End-to-end encrypted sessions with automatic cleanup. Your credentials are safe and never stored permanently.</p>
-          </div>
+        <div class="feature-card">
+          <i class="fas fa-rocket feature-icon"></i>
+          <h3 class="feature-title">One-Click Deploy</h3>
+          <p class="feature-desc">Deploy to any platform instantly. Compatible with Heroku, Railway, Render, and all major hosts.</p>
+        </div>
 
-          <div class="feature-card">
-            <i class="fas fa-cloud-arrow-up"></i>
-            <h3>Easy Deployment</h3>
-            <p>Deploy your WhatsApp bot on Heroku, Railway, Render, Koyeb, or any VPS. Full deployment support included.</p>
-          </div>
+        <div class="feature-card">
+          <i class="fas fa-code feature-icon"></i>
+          <h3 class="feature-title">Developer Friendly</h3>
+          <p class="feature-desc">Open-source codebase with comprehensive API. Build and customize without limitations.</p>
+        </div>
 
-          <div class="feature-card">
-            <i class="fas fa-rocket"></i>
-            <h3>Lightning Fast</h3>
-            <p>Optimized for speed with automatic session management. Get your bot running in under 30 seconds.</p>
-          </div>
-
-          <div class="feature-card">
-            <i class="fas fa-headset"></i>
-            <h3>24/7 Support</h3>
-            <p>Active community support and documentation. Join our WhatsApp channel for updates and assistance.</p>
-          </div>
-
-          <div class="feature-card">
-            <i class="fas fa-code-branch"></i>
-            <h3>Open Source</h3>
-            <p>Fully open-source codebase on GitHub. Contribute, customize, and build your perfect WhatsApp bot solution.</p>
-          </div>
+        <div class="feature-card">
+          <i class="fas fa-headset feature-icon"></i>
+          <h3 class="feature-title">Expert Support</h3>
+          <p class="feature-desc">Active community and dedicated support team available around the clock to help you succeed.</p>
         </div>
       </div>
+    </section>
 
-      <div class="glass-card" style="margin-top: 40px; text-align: center;">
-        <h3 style="font-size: 1.8rem; margin-bottom: 20px; color: var(--text-primary);">
-          <i class="fas fa-bolt" style="color: var(--primary-color);"></i>
-          Get Started in 3 Easy Steps
-        </h3>
-        <div style="text-align: left; max-width: 600px; margin: 0 auto;">
-          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--primary-color);">1.</strong> Choose your pairing method (QR or Phone Code)
-          </p>
-          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--primary-color);">2.</strong> Complete the pairing process with WhatsApp
-          </p>
-          <p style="margin: 15px 0; color: var(--text-secondary); font-size: 1.1rem;">
-            <strong style="color: var(--primary-color);">3.</strong> Receive your session ID and deploy your bot
-          </p>
-        </div>
+    <section class="cta-section">
+      <h2 class="section-title" style="margin-bottom: 20px;">Ready to Get Started?</h2>
+      <p class="hero-subtitle" style="margin-bottom: 40px;">
+        Join thousands of developers using ALI-MD for their WhatsApp automation
+      </p>
+      <div class="cta-buttons">
+        <a href="qr-scanner" class="btn btn-primary">
+          <i class="fas fa-qrcode"></i>
+          <span>Start with QR Code</span>
+        </a>
+        <a href="pair" class="btn btn-secondary">
+          <i class="fas fa-mobile-alt"></i>
+          <span>Use Phone Pairing</span>
+        </a>
       </div>
     </section>
 
     <footer>
       <div class="footer-links">
-        <a href="https://github.com/JawadYT36/KHAN-MD" target="_blank" class="footer-link">
+        <a href="https://github.com/GlobalTechInfo" target="_blank" class="footer-link">
           <i class="fab fa-github"></i>
           <span>GitHub</span>
         </a>
         <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j" target="_blank" class="footer-link">
           <i class="fab fa-whatsapp"></i>
-          <span>WhatsApp Channel</span>
+          <span>WhatsApp</span>
         </a>
         <a href="#features" class="footer-link">
-          <i class="fas fa-info-circle"></i>
+          <i class="fas fa-book"></i>
           <span>Documentation</span>
         </a>
       </div>
-      <p style="margin-top: 20px;">&copy; <span id="year"></span> JAWAD TECH | KHAN-MD. All rights reserved.</p>
-      <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.8;">Premium WhatsApp Bot Pairing Platform</p>
+      <p style="color: var(--text-muted); margin-top: 30px;">
+        &copy; <span id="year"></span> ALI-MD. Premium WhatsApp Bot Platform.
+      </p>
     </footer>
   </div>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      starsContainer.appendChild(star);
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+      particlesContainer.appendChild(particle);
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

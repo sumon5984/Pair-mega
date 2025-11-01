@@ -3,224 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR Code Scanner | ALI-MD WhatsApp Bot</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>QR Scanner | ALI-MD</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --whatsapp-green: #25D366;
-      --whatsapp-dark: #128C7E;
-      --whatsapp-teal: #075E54;
-      --bg-primary: #0a0e27;
-      --bg-secondary: #1a1f3a;
-      --accent-pink: #ff6b9d;
-      --accent-blue: #4facfe;
-      --accent-purple: #9d50bb;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-strong: rgba(255, 255, 255, 0.12);
-      --glass-border: rgba(255, 255, 255, 0.18);
-      --text-primary: #ffffff;
-      --text-secondary: #b8c5d6;
-      --success: #10b981;
-      --error: #ef4444;
-      --info: #3b82f6;
+      --primary: #00d9ff;
+      --primary-dark: #0099cc;
+      --secondary: #ff006e;
+      --accent: #8338ec;
+      --bg-dark: #0d0221;
+      --bg-darker: #070114;
+      --surface: #1a0f2e;
+      --surface-light: #2a1f3e;
+      --text: #ffffff;
+      --text-muted: #a5b4cb;
+      --success: #06ffa5;
+      --error: #ff006e;
+      --glow: 0 0 20px rgba(0, 217, 255, 0.6);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
+
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+      color: var(--text);
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
       position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before,
-    body::after {
-      content: '';
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.5;
-      animation: morph 20s ease-in-out infinite;
-      pointer-events: none;
+      overflow: hidden;
     }
 
     body::before {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(37, 211, 102, 0.35), transparent 70%);
-      top: -300px;
-      left: -300px;
-    }
-
-    body::after {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(79, 172, 254, 0.3), transparent 70%);
-      bottom: -250px;
-      right: -250px;
-      animation-delay: 3s;
-    }
-
-    @keyframes morph {
-      0%, 100% { 
-        border-radius: 50% 40% 60% 50%;
-        transform: rotate(0deg) scale(1);
-      }
-      50% { 
-        border-radius: 40% 50% 40% 60%;
-        transform: rotate(180deg) scale(1.1);
-      }
-    }
-
-    .grid-bg {
+      content: '';
       position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
-      background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 110, 0.15) 0%, transparent 50%);
       pointer-events: none;
-      z-index: 0;
+      animation: pulse 10s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
 
     .container {
+      width: 100%;
+      max-width: 650px;
+      background: var(--surface);
+      border-radius: 30px;
+      padding: 50px 40px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
+                  inset 0 0 0 1px rgba(0, 217, 255, 0.2);
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 40px 20px;
+      animation: slideUp 0.6s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .header {
       text-align: center;
       margin-bottom: 40px;
-      animation: fadeInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .logo {
+      font-size: 60px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 20px var(--primary));
+      animation: float 3s ease-in-out infinite;
     }
 
-    .header h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 800;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, var(--whatsapp-green), var(--accent-blue), var(--accent-purple));
-      background-size: 200% 200%;
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: gradientFlow 3s ease infinite;
+      margin-bottom: 10px;
     }
 
-    @keyframes gradientFlow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .header p {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-
-    .qr-card {
-      width: 100%;
-      max-width: 600px;
-      background: var(--glass);
-      backdrop-filter: blur(30px) saturate(150%);
-      border: 1px solid var(--glass-border);
-      border-radius: 32px;
-      padding: 45px;
-      box-shadow: 
-        0 30px 80px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .qr-card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        from 0deg,
-        transparent 0deg 340deg,
-        var(--whatsapp-green) 340deg 360deg
-      );
-      animation: rotate 4s linear infinite;
-      opacity: 0.5;
-    }
-
-    @keyframes rotate {
-      100% { transform: rotate(360deg); }
-    }
-
-    .qr-card::after {
-      content: '';
-      position: absolute;
-      inset: 2px;
-      background: var(--bg-primary);
-      border-radius: 30px;
-      z-index: 0;
-    }
-
-    .qr-content {
-      position: relative;
-      z-index: 1;
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
     }
 
     .qr-display {
       width: 100%;
-      max-width: 360px;
-      height: 360px;
-      margin: 0 auto 25px;
-      border-radius: 24px;
+      max-width: 400px;
+      height: 400px;
+      margin: 0 auto 30px;
+      border-radius: 25px;
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.98));
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s;
       position: relative;
       overflow: hidden;
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.2),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-      transition: transform 0.3s ease;
+    }
+
+    .qr-display::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+      border-radius: 25px;
+      z-index: -1;
+      animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
     }
 
     .qr-display:hover {
@@ -231,7 +149,7 @@
       width: 85%;
       height: 85%;
       object-fit: contain;
-      border-radius: 12px;
+      border-radius: 15px;
     }
 
     .loading-container {
@@ -242,10 +160,10 @@
     }
 
     .loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(37, 211, 102, 0.1);
-      border-top-color: var(--whatsapp-green);
+      width: 70px;
+      height: 70px;
+      border: 5px solid rgba(0, 217, 255, 0.1);
+      border-top-color: var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -255,30 +173,33 @@
     }
 
     .loading-text {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 500;
     }
 
     .status-message {
-      margin: 20px 0;
-      min-height: 30px;
-      font-size: 1.05rem;
-      font-weight: 600;
       text-align: center;
-      transition: all 0.3s ease;
+      min-height: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      transition: all 0.3s;
     }
 
-    .status-success { 
+    .status-success {
       color: var(--success);
       animation: bounceIn 0.5s ease;
     }
 
-    .status-error { 
+    .status-error {
       color: var(--error);
       animation: shake 0.5s ease;
     }
 
-    .status-info { color: var(--info); }
+    .status-info {
+      color: var(--primary);
+    }
 
     @keyframes bounceIn {
       0% { transform: scale(0.8); opacity: 0; }
@@ -295,25 +216,25 @@
     .buttons {
       display: flex;
       gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 25px 0 15px;
+      margin-bottom: 30px;
     }
 
     .btn {
-      padding: 14px 28px;
+      flex: 1;
+      padding: 16px;
       border: none;
       border-radius: 14px;
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s;
+      text-decoration: none;
       position: relative;
       overflow: hidden;
-      text-decoration: none;
     }
 
     .btn::before {
@@ -323,8 +244,8 @@
       left: 50%;
       width: 0;
       height: 0;
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
       transform: translate(-50%, -50%);
       transition: width 0.6s, height 0.6s;
     }
@@ -334,79 +255,62 @@
       height: 300px;
     }
 
-    .btn:hover {
-      transform: translateY(-3px);
-    }
-
-    .btn:active {
-      transform: translateY(-1px);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
     .btn-primary {
-      background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
-      color: white;
-      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--bg-dark);
+      box-shadow: var(--glow);
     }
 
     .btn-primary:hover {
-      box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
     }
 
     .btn-secondary {
-      background: var(--glass-strong);
-      color: var(--text-primary);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--primary);
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      background: var(--surface-light);
+      transform: translateY(-3px);
     }
 
     .instructions {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
+      background: var(--surface-light);
+      border: 1px solid rgba(0, 217, 255, 0.2);
       border-radius: 20px;
-      padding: 25px;
+      padding: 30px;
       margin-top: 30px;
-      backdrop-filter: blur(20px);
     }
 
     .instructions h3 {
-      color: var(--whatsapp-green);
-      margin-bottom: 18px;
-      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .instructions ol {
-      padding-left: 24px;
-      color: var(--text-secondary);
+      padding-left: 25px;
+      color: var(--text-muted);
     }
 
     .instructions li {
       margin-bottom: 12px;
       line-height: 1.6;
-      position: relative;
     }
 
     .instructions li::marker {
-      color: var(--whatsapp-green);
+      color: var(--primary);
       font-weight: 700;
     }
 
     .error-display {
       color: var(--error);
-      font-size: 1.1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -415,95 +319,61 @@
     }
 
     .error-display i {
-      font-size: 3rem;
+      font-size: 3.5rem;
       opacity: 0.8;
     }
 
     @media (max-width: 650px) {
-      .qr-card {
-        padding: 30px 20px;
-        border-radius: 24px;
-      }
-
-      .qr-display {
-        max-width: 300px;
-        height: 300px;
-      }
-
-      .header h1 {
-        font-size: 1.8rem;
-      }
-
-      .buttons {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .instructions {
-        padding: 20px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      .container { padding: 35px 25px; }
+      .qr-display { max-width: 320px; height: 320px; }
+      .title { font-size: 2rem; }
+      .buttons { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <div class="grid-bg"></div>
-
   <div class="container">
     <div class="header">
-      <h1><i class="fas fa-qrcode"></i> QR Code Scanner</h1>
-      <p>Scan with WhatsApp to connect your ALI-MD bot instantly</p>
+      <div class="logo">⚡</div>
+      <h1 class="title">ALI-MD</h1>
+      <p class="subtitle">Scan QR Code to Connect</p>
     </div>
 
-    <div class="qr-card">
-      <div class="qr-content">
-        <div class="qr-display" id="qrDisplay">
-          <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <div class="loading-text">Initializing...</div>
-          </div>
-        </div>
-
-        <div class="status-message status-info" id="statusMessage">Generating QR Code...</div>
-
-        <div class="buttons">
-          <button class="btn btn-primary" id="refreshBtn" onclick="refreshQR()">
-            <i class="fas fa-rotate"></i>
-            <span>Refresh QR Code</span>
-          </button>
-          <a href="/" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i>
-            <span>Back to Home</span>
-          </a>
-        </div>
-
-        <div class="instructions">
-          <h3>
-            <i class="fab fa-whatsapp"></i>
-            How to Scan QR Code
-          </h3>
-          <ol>
-            <li>Open WhatsApp on your phone</li>
-            <li>Tap <strong>Menu (⋮)</strong> or <strong>Settings</strong></li>
-            <li>Select <strong>"Linked Devices"</strong></li>
-            <li>Tap <strong>"Link a Device"</strong></li>
-            <li>Point your camera at the QR code above</li>
-            <li>Wait for the session ID to be sent to your WhatsApp</li>
-          </ol>
-        </div>
+    <div class="qr-display" id="qrDisplay">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Initializing...</div>
       </div>
+    </div>
+
+    <div class="status-message status-info" id="statusMessage">
+      Generating QR Code...
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-primary" id="refreshBtn" onclick="refreshQR()">
+        <i class="fas fa-rotate"></i>
+        <span>Refresh QR</span>
+      </button>
+      <a href="/" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back Home</span>
+      </a>
+    </div>
+
+    <div class="instructions">
+      <h3>
+        <i class="fab fa-whatsapp"></i>
+        How to Scan
+      </h3>
+      <ol>
+        <li>Open WhatsApp on your phone</li>
+        <li>Tap <strong>Menu (⋮)</strong> or <strong>Settings</strong></li>
+        <li>Select <strong>"Linked Devices"</strong></li>
+        <li>Tap <strong>"Link a Device"</strong></li>
+        <li>Point your camera at this QR code</li>
+        <li>Wait for the session ID to be sent</li>
+      </ol>
     </div>
   </div>
 
@@ -540,7 +410,7 @@
         if (response.data && response.data.success && response.data.qr) {
           currentSessionId = response.data.sessionId;
           qrDisplay.innerHTML = `<img src="${response.data.qr}" alt="QR Code" />`;
-          setStatus('✅ QR Code ready! Scan with WhatsApp camera', 'success');
+          setStatus('✅ QR Code ready! Scan with WhatsApp', 'success');
 
           setTimeout(() => {
             if (currentSessionId === response.data.sessionId) {
@@ -549,7 +419,7 @@
             }
           }, 45000);
         } else {
-          throw new Error(response.data?.error || 'Invalid response from server');
+          throw new Error(response.data?.error || 'Invalid response');
         }
       } catch (error) {
         console.error('QR generation error:', error);
@@ -567,7 +437,7 @@
           <div class="error-display">
             <i class="fas fa-exclamation-triangle"></i>
             <span>QR Generation Failed</span>
-            <button class="btn btn-primary" onclick="refreshQR()" style="margin-top: 10px;">
+            <button class="btn btn-primary" onclick="refreshQR()" style="margin-top: 10px; width: auto; padding: 12px 24px;">
               <i class="fas fa-rotate"></i> Try Again
             </button>
           </div>

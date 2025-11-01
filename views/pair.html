@@ -3,323 +3,269 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JawadTechX - WhatsApp Pair</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <title>Phone Pairing | ALI-MD</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     :root {
-      --primary-color: #00f7ff;
-      --primary-dark: #00c4cc;
-      --primary-light: #33ffff;
-      --secondary-color: #000000;
-      --accent-color: #1a1a1a;
-      --accent-light: #2a2a2a;
-      --text-color: #ffffff;
-      --text-muted: rgba(255, 255, 255, 0.7);
-      --text-dim: rgba(255, 255, 255, 0.5);
-      --background-color: #0a0a0a;
-      --background-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-      --hover-color: #222222;
-      --border-color: rgba(0, 247, 255, 0.2);
-      --border-color-strong: rgba(0, 247, 255, 0.4);
-      --error-color: #ff3e3e;
-      --error-glow: rgba(255, 62, 62, 0.5);
-      --success-color: #00f7ff;
-      --neon-glow: 0 0 10px rgba(0, 247, 255, 0.8),
-                   0 0 20px rgba(0, 247, 255, 0.6),
-                   0 0 30px rgba(0, 247, 255, 0.4);
-      --neon-glow-strong: 0 0 15px rgba(0, 247, 255, 0.9),
-                          0 0 30px rgba(0, 247, 255, 0.7),
-                          0 0 45px rgba(0, 247, 255, 0.5);
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --primary: #00d9ff;
+      --primary-dark: #0099cc;
+      --secondary: #ff006e;
+      --accent: #8338ec;
+      --bg-dark: #0d0221;
+      --bg-darker: #070114;
+      --surface: #1a0f2e;
+      --surface-light: #2a1f3e;
+      --text: #ffffff;
+      --text-muted: #a5b4cb;
+      --success: #06ffa5;
+      --error: #ff006e;
+      --glow: 0 0 20px rgba(0, 217, 255, 0.6);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--background-gradient);
-      color: var(--text-color);
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 20px;
-      line-height: 1.6;
       position: relative;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     body::before {
       content: '';
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: gridMove 20s linear infinite;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 0, 110, 0.15) 0%, transparent 50%);
       pointer-events: none;
-      z-index: 0;
+      animation: pulse 10s ease-in-out infinite;
     }
 
-    @keyframes gridMove {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(50px, 50px); }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
 
     .container {
       width: 100%;
-      max-width: 500px;
-      background: var(--accent-color);
-      border-radius: 20px;
-      padding: 35px;
-      box-shadow: var(--neon-glow);
-      border: 2px solid var(--border-color);
-      transition: var(--transition);
+      max-width: 520px;
+      background: var(--surface);
+      border-radius: 30px;
+      padding: 50px 40px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
+                  inset 0 0 0 1px rgba(0, 217, 255, 0.2);
       position: relative;
       z-index: 1;
-      backdrop-filter: blur(10px);
+      animation: slideUp 0.6s ease;
     }
 
-    .container::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark), var(--primary-color));
-      border-radius: 20px;
-      z-index: -1;
-      opacity: 0;
-      transition: var(--transition);
-      background-size: 200% 200%;
-      animation: gradientShift 3s ease infinite;
-    }
-
-    .container:hover::before {
-      opacity: 0.3;
-    }
-
-    .container:hover {
-      box-shadow: var(--neon-glow-strong);
-      transform: translateY(-2px);
-    }
-
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     .logo {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 18px;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
-      color: var(--secondary-color);
-      box-shadow: var(--neon-glow);
-      transition: var(--transition);
-      animation: pulse 3s ease-in-out infinite;
+      font-size: 50px;
+      box-shadow: var(--glow);
+      animation: rotate 20s linear infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .logo:hover {
-      transform: scale(1.1) rotate(5deg);
-      box-shadow: var(--neon-glow-strong);
-      animation: none;
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .title {
-      font-size: 28px;
+      font-size: 2.2rem;
       font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 10px;
-      color: var(--primary-color);
-      text-shadow: 0 0 15px rgba(0, 247, 255, 0.8);
-      letter-spacing: -0.5px;
     }
 
     .subtitle {
-      font-size: 15px;
       color: var(--text-muted);
-      margin-bottom: 25px;
-      text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
-    }
-
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
+      font-size: 1rem;
       margin-bottom: 30px;
     }
 
-    .social-icons a {
-      width: 48px;
-      height: 48px;
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .social-btn {
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
+      background: var(--surface-light);
+      border: 2px solid rgba(0, 217, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-color);
-      font-size: 20px;
+      color: var(--text);
       text-decoration: none;
-      transition: var(--transition);
-      background: var(--hover-color);
-      border: 2px solid var(--border-color);
-      box-shadow: var(--shadow-soft);
+      font-size: 20px;
+      transition: all 0.3s;
     }
 
-    .social-icons a:hover {
-      transform: translateY(-4px) scale(1.05);
-      background: var(--accent-light);
-      border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.6);
-      color: var(--primary-color);
+    .social-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--bg-dark);
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
     }
 
     .input-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .input-label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-weight: 600;
-      font-size: 14px;
-      color: var(--primary-color);
-      text-shadow: 0 0 5px rgba(0, 247, 255, 0.4);
+      font-size: 0.95rem;
+      color: var(--primary);
     }
 
     .input-field {
       width: 100%;
-      padding: 15px;
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      background: var(--hover-color);
-      color: var(--text-color);
-      font-size: 15px;
-      transition: var(--transition);
-      font-family: 'Courier New', monospace;
+      padding: 16px 20px;
+      border: 2px solid rgba(0, 217, 255, 0.2);
+      border-radius: 14px;
+      background: var(--surface-light);
+      color: var(--text);
+      font-size: 1.05rem;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.3s;
     }
 
     .input-field:focus {
       outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
-      background: var(--accent-light);
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
     }
 
     .input-field::placeholder {
-      color: var(--text-dim);
+      color: var(--text-muted);
+      opacity: 0.5;
     }
 
     .input-hint {
-      font-size: 12px;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      margin-top: 6px;
-      text-shadow: 0 0 3px rgba(0, 247, 255, 0.3);
+      margin-top: 8px;
     }
 
-    .generate-btn {
+    .btn {
       width: 100%;
-      padding: 16px;
-      background: var(--primary-color);
+      padding: 18px;
       border: none;
-      border-radius: 12px;
-      color: var(--secondary-color);
-      font-size: 16px;
+      border-radius: 14px;
+      font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
-      transition: var(--transition);
-      margin-bottom: 18px;
-      box-shadow: var(--neon-glow);
+      transition: all 0.3s;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .generate-btn:hover {
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 400px;
+      height: 400px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--bg-dark);
+      box-shadow: var(--glow);
+      margin-bottom: 20px;
+    }
+
+    .btn-primary:hover {
       transform: translateY(-3px);
-      box-shadow: var(--neon-glow-strong);
-      background: var(--primary-light);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
     }
 
-    .generate-btn:active {
-      transform: translateY(-1px);
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      display: none;
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-light);
+      transform: translateY(-3px);
     }
 
     .code-display {
-      background: var(--background-color);
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 18px;
-      min-height: 60px;
+      background: var(--bg-darker);
+      padding: 20px;
+      border-radius: 14px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--border-color);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(0, 217, 255, 0.2);
+      margin-bottom: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
       color: var(--text-muted);
     }
 
-    .copy-btn {
-      width: 100%;
-      padding: 15px;
-      background: var(--hover-color);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: var(--primary-color);
-      transition: var(--transition);
-    }
-
-    .copy-btn:hover {
-      background: var(--accent-light);
-      border-color: var(--primary-color);
-      box-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .success-message {
-      color: var(--success-color);
+    .success {
+      color: var(--success);
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
-      font-size: 16px;
-      text-shadow: 0 0 10px rgba(0, 247, 255, 0.8);
+      font-size: 1.2rem;
+      font-weight: 600;
       animation: successPulse 0.5s ease;
     }
 
@@ -328,121 +274,93 @@
       50% { transform: scale(1.05); }
     }
 
-    .error-message {
-      color: var(--error-color);
+    .error {
+      color: var(--error);
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
-      font-size: 14px;
-      text-shadow: 0 0 8px var(--error-glow);
+      font-size: 1rem;
     }
 
     .loading {
       display: none;
       text-align: center;
-      margin: 18px 0;
+      margin: 20px 0;
     }
 
     .loading i {
-      font-size: 28px;
-      color: var(--primary-color);
+      font-size: 2.5rem;
+      color: var(--primary);
       animation: spin 1s linear infinite;
-      text-shadow: var(--neon-glow);
-      filter: drop-shadow(0 0 10px rgba(0, 247, 255, 0.8));
+      filter: drop-shadow(0 0 15px var(--primary));
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+
+    .back-btn:hover {
+      color: var(--primary);
+      transform: translateX(-5px);
     }
 
     .footer {
       text-align: center;
-      margin-top: 30px;
-      font-size: 13px;
+      margin-top: 35px;
       color: var(--text-muted);
-      text-shadow: 0 0 5px rgba(0, 247, 255, 0.3);
-    }
-
-    #toast {
-      display: none;
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      z-index: 1000;
-      box-shadow: var(--neon-glow-strong);
-      transition: opacity 0.3s ease;
-      opacity: 0;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 25px;
-        border-radius: 16px;
-      }
-
-      .logo {
-        width: 75px;
-        height: 75px;
-        font-size: 30px;
-      }
-
-      .title {
-        font-size: 24px;
-      }
-
-      .social-icons a {
-        width: 44px;
-        height: 44px;
-        font-size: 18px;
-      }
-
-      .code-display {
-        font-size: 14px;
-        min-height: 55px;
-      }
+      .container { padding: 35px 25px; }
+      .logo { width: 80px; height: 80px; font-size: 40px; }
+      .title { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo"><i class="fas fa-robot"></i></div>
-      <h1 class="title">JawadTechX</h1>
-      <p class="subtitle">Connect your WhatsApp account</p>
-      
-      <div class="social-icons">
-        <a href="https://www.youtube.com/@JawadTechX" target="_blank" title="YouTube">
-          <i class="fab fa-youtube"></i>
-        </a>
-        <a href="https://github.com/JawadYT36/KHAN-MD" target="_blank" title="GitHub">
+      <div class="logo">⚡</div>
+      <h1 class="title">ALI-MD</h1>
+      <p class="subtitle">Phone Number Pairing</p>
+
+      <div class="social-links">
+        <a href="https://github.com/GlobalTechInfo" target="_blank" class="social-btn" title="GitHub">
           <i class="fab fa-github"></i>
         </a>
-        <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j" target="_blank" title="WhatsApp">
+        <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j" target="_blank" class="social-btn" title="WhatsApp">
           <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://github.com/JawadTechXD/JAWAD-MD" target="_blank" title="GitHub">
-          <i class="fab fa-github"></i>
         </a>
       </div>
     </div>
 
     <div class="input-group">
-      <label class="input-label">Enter your WhatsApp number with country code</label>
-      <input type="tel" id="mobileNumber" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
-      <p class="input-hint">Example: 923427582273 (92 for Pakistan)</p>
+      <label class="input-label">WhatsApp Number</label>
+      <input 
+        type="tel" 
+        id="phoneNumber" 
+        class="input-field" 
+        placeholder="923001234567"
+        pattern="[0-9]+"
+      />
+      <p class="input-hint">Enter with country code (e.g., 923001234567)</p>
     </div>
 
-    <button class="generate-btn" id="submit">
-      <i class="fas fa-key"></i> Generate Pairing Code
+    <button class="btn btn-primary" id="generateBtn">
+      <i class="fas fa-key"></i>
+      <span>Generate Pairing Code</span>
     </button>
 
     <div class="loading" id="loading">
@@ -450,87 +368,80 @@
     </div>
 
     <div class="code-display" id="codeDisplay">
-      Your pair code will appear here
+      Your pairing code will appear here
     </div>
 
-    <button class="copy-btn" id="copy">
-      <i class="fas fa-copy"></i> Copy Code
+    <button class="btn btn-secondary" id="copyBtn">
+      <i class="fas fa-copy"></i>
+      <span>Copy Code</span>
     </button>
 
+    <a href="/" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      <span>Back to Home</span>
+    </a>
+
     <div class="footer">
-      <p>© 2025 JAWAD TECH | KHAN-MD</p>
+      <p>&copy; 2025 ALI-MD. All rights reserved.</p>
     </div>
   </div>
 
-  <div id="toast">Code copied to clipboard!</div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
   <script>
-    document.getElementById("submit").addEventListener("click", async (e) => {
-      e.preventDefault();
-      const mobileNumberInput = document.getElementById("mobileNumber");
-      const codeDisplay = document.getElementById("codeDisplay");
-      const loadingSpinner = document.getElementById("loading");
-      const copyBtn = document.getElementById("copy");
+    const phoneInput = document.getElementById('phoneNumber');
+    const generateBtn = document.getElementById('generateBtn');
+    const codeDisplay = document.getElementById('codeDisplay');
+    const copyBtn = document.getElementById('copyBtn');
+    const loading = document.getElementById('loading');
 
-      const mobileNumber = mobileNumberInput.value.trim();
-      if (!mobileNumber) {
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
-        copyBtn.style.display = "none";
+    generateBtn.addEventListener('click', async () => {
+      const phone = phoneInput.value.trim().replace(/[^0-9]/g, '');
+
+      if (!phone) {
+        codeDisplay.innerHTML = '<div class="error"><i class="fas fa-exclamation-circle"></i> Please enter your phone number</div>';
+        copyBtn.style.display = 'none';
         return;
       }
 
-      loadingSpinner.style.display = "block";
+      loading.style.display = 'block';
       codeDisplay.innerHTML = '';
-      copyBtn.style.display = "none";
+      copyBtn.style.display = 'none';
+      generateBtn.disabled = true;
 
       try {
-        const response = await axios(`/code?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
-        const code = response.data.code || "Service Unavailable";
-        if (code === "Service Unavailable") {
-          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
+        const response = await axios.get(`/code?number=${phone}`);
+        const code = response.data.code;
+
+        if (code && code !== 'Service Unavailable') {
+          codeDisplay.innerHTML = `<div class="success"><i class="fas fa-check-circle"></i> ${code}</div>`;
+          copyBtn.style.display = 'flex';
         } else {
-          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
-          copyBtn.style.display = "flex";
+          codeDisplay.innerHTML = '<div class="error"><i class="fas fa-exclamation-triangle"></i> Service temporarily unavailable</div>';
         }
       } catch (error) {
-        console.error("Error generating code:", error);
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code. Please try again.</div>';
+        console.error('Error:', error);
+        codeDisplay.innerHTML = '<div class="error"><i class="fas fa-exclamation-circle"></i> Failed to generate code. Try again.</div>';
       } finally {
-        loadingSpinner.style.display = "none";
+        loading.style.display = 'none';
+        generateBtn.disabled = false;
       }
     });
 
-    document.getElementById("copy").addEventListener("click", function() {
-      const codeDisplay = document.getElementById("codeDisplay").innerText;
-      const code = codeDisplay.replace('CODE: ', '');
-      const copyBtn = document.getElementById("copy");
-
-      navigator.clipboard.writeText(code).then(() => {
+    copyBtn.addEventListener('click', () => {
+      const codeText = codeDisplay.innerText;
+      navigator.clipboard.writeText(codeText).then(() => {
         const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-        copyBtn.disabled = true;
-        copyBtn.style.opacity = "0.6";
-        copyBtn.style.cursor = "not-allowed";
-
-        const toast = document.getElementById("toast");
-        toast.style.display = "block";
-        toast.style.opacity = "1";
-
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> <span>Copied!</span>';
         setTimeout(() => {
           copyBtn.innerHTML = originalText;
-          copyBtn.disabled = false;
-          copyBtn.style.opacity = "1";
-          copyBtn.style.cursor = "pointer";
-
-          toast.style.opacity = "0";
-          setTimeout(() => {
-            toast.style.display = "none";
-          }, 300);
         }, 2000);
-      }).catch(err => {
-        console.error("Failed to copy text: ", err);
       });
+    });
+
+    phoneInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        generateBtn.click();
+      }
     });
   </script>
 </body>
