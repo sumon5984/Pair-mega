@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JawadTechX - WhatsApp Pair</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary-color: #00f7ff; /* Neon Cyan */
+      --secondary-color: #000000;
+      --accent-color: #1a1a1a;
+      --text-color: #ffffff;
+      --background-color: #0a0a0a;
+      --hover-color: #222222;
+      --border-color: rgba(0, 247, 255, 0.2);
+      --neon-glow: 0 0 10px rgba(0, 247, 255, 0.8),
+                   0 0 20px rgba(0, 247, 255, 0.6),
+                   0 0 30px rgba(0, 247, 255, 0.4);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--accent-color);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--neon-glow);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .container:hover {
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.9),
+                  0 0 30px rgba(0, 247, 255, 0.7),
+                  0 0 45px rgba(0, 247, 255, 0.5);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #00ccff 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: var(--text-color);
+      box-shadow: var(--neon-glow);
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 247, 255, 0.9),
+                  0 0 40px rgba(0, 247, 255, 0.7);
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px rgba(0, 247, 255, 0.7);
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px rgba(0, 247, 255, 0.5);
+      opacity: 0.8;
+    }
+
+    .mode-toggle {
+      display: flex;
+      background: rgba(26, 26, 26, 0.8);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 25px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 247, 255, 0.2);
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+    }
+
+    .mode-btn.active {
+      background: var(--primary-color);
+      color: var(--secondary-color);
+      box-shadow: var(--neon-glow);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .social-icons a {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-icons a.youtube { 
+      background: #FF0000; 
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+    .social-icons a.telegram { 
+      background: #0088cc; 
+      box-shadow: 0 0 10px rgba(0, 136, 204, 0.7);
+    }
+    .social-icons a.whatsapp { 
+      background: #25D366; 
+      box-shadow: 0 0 10px rgba(37, 211, 102, 0.7);
+    }
+    .social-icons a.github { 
+      background: #333; 
+      box-shadow: 0 0 10px rgba(51, 51, 51, 0.7);
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-icons a.youtube:hover { 
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+    }
+    .social-icons a.telegram:hover { 
+      box-shadow: 0 0 15px rgba(0, 136, 204, 0.9);
+    }
+    .social-icons a.whatsapp:hover { 
+      box-shadow: 0 0 15px rgba(37, 211, 102, 0.9);
+    }
+    .social-icons a.github:hover { 
+      box-shadow: 0 0 15px rgba(51, 51, 51, 0.9);
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--primary-color);
+      text-shadow: 0 0 5px rgba(0, 247, 255, 0.5);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--hover-color);
+      color: var(--text-color);
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+    }
+
+    .input-field::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .generate-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary-color);
+      border: none;
+      border-radius: 12px;
+      color: var(--secondary-color);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 16px;
+      box-shadow: var(--neon-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 247, 255, 0.9),
+                  0 0 40px rgba(0, 247, 255, 0.7);
+      background: #33ffff;
+    }
+
+    .code-display {
+      background: var(--hover-color);
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--border-color);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .copy-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--hover-color);
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-color);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+    }
+
+    .success-message {
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      text-shadow: 0 0 5px rgba(0, 247, 255, 0.7);
+    }
+
+    .error-message {
+      color: #ff3e3e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      text-shadow: 0 0 5px rgba(255, 62, 62, 0.7);
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .loading i {
+      font-size: 24px;
+      color: var(--primary-color);
+      animation: spin 1s linear infinite;
+      text-shadow: var(--neon-glow);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 13px;
+      color: var(--primary-color);
+      text-shadow: 0 0 5px rgba(0, 247, 255, 0.5);
+      opacity: 0.8;
+    }
+
+    /* Toast styles */
+    #toast {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1000;
+      box-shadow: var(--neon-glow);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px;
+        border-radius: 12px;
+      }
+
+      .code-display {
+        font-size: 16px;
+        min-height: 50px;
+      }
+
+      .title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo"><i class="fas fa-robot"></i></div>
+      <h1 class="title">JawadTechX</h1>
+      <p class="subtitle">Connect your WhatsApp account</p>
+      
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="pair1">Pair-1</button>
+        <button class="mode-btn" data-mode="pair2">Pair-2</button>
+      </div>
+      
+      <div class="social-icons">
+        <a href="https://www.youtube.com/@JawadTechX" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
+        <a href="https://github.com/JawadYT36/KHAN-MD" target="_blank" class="telegram"><i class="fab fa-github"></i></a>
+        <a href="https://whatsapp.com/channel/0029VatOy2EAzNc2WcShQw1j" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://github.com/JawadTechXD/JAWAD-MD" target="_blank" class="github"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+
+    <!-- Pair-1 Section -->
+    <div class="content-section active" id="pair1-section">
+      <div class="input-group">
+        <label class="input-label">Enter your WhatsApp number with country code</label>
+        <input type="tel" id="mobileNumber1" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
+        <p style="font-size: 12px; color: var(--primary-color); margin-top: 5px; text-shadow: 0 0 3px rgba(0, 247, 255, 0.5);">Example: 923427582273 (92 for Pakistan)</p>
+      </div>
+
+      <button class="generate-btn" id="submit1">
+        <i class="fas fa-key"></i> Generate Pair-1 Code
+      </button>
+
+      <div class="loading" id="loading1">
+        <i class="fas fa-spinner"></i>
+      </div>
+
+      <div class="code-display" id="codeDisplay1">
+        Your pair code will appear here
+      </div>
+
+      <button class="copy-btn" id="copy1">
+        <i class="fas fa-copy"></i> Copy Code
+      </button>
+    </div>
+
+    <!-- Pair-2 Section -->
+    <div class="content-section" id="pair2-section">
+      <div class="input-group">
+        <label class="input-label">Enter your WhatsApp number with country code</label>
+        <input type="tel" id="mobileNumber2" class="input-field" placeholder="923427582273" pattern="[0-9]{8,}" title="Please enter your full phone number including country code">
+        <p style="font-size: 12px; color: var(--primary-color); margin-top: 5px; text-shadow: 0 0 3px rgba(0, 247, 255, 0.5);">Example: 923427582273 (92 for Pakistan)</p>
+      </div>
+
+      <button class="generate-btn" id="submit2">
+        <i class="fas fa-key"></i> Generate Pair-2 Code
+      </button>
+
+      <div class="loading" id="loading2">
+        <i class="fas fa-spinner"></i>
+      </div>
+
+      <div class="code-display" id="codeDisplay2">
+        Your pair code will appear here
+      </div>
+
+      <button class="copy-btn" id="copy2">
+        <i class="fas fa-copy"></i> Copy Code
+      </button>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 JAWAD TECH | KHAN-MD</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast">Code copied to clipboard!</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    // Mode toggle functionality
+    document.querySelectorAll('.mode-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        // Update active button
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Show corresponding section
+        const mode = this.getAttribute('data-mode');
+        document.querySelectorAll('.content-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById(`${mode}-section`).classList.add('active');
+      });
+    });
+
+    // Pair-1 functionality
+    document.getElementById("submit1").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const mobileNumberInput = document.getElementById("mobileNumber1");
+      const codeDisplay = document.getElementById("codeDisplay1");
+      const loadingSpinner = document.getElementById("loading1");
+      const copyBtn = document.getElementById("copy1");
+
+      const mobileNumber = mobileNumberInput.value.trim();
+      if (!mobileNumber) {
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
+        copyBtn.style.display = "none";
+        return;
+      }
+
+      loadingSpinner.style.display = "block";
+      codeDisplay.innerHTML = '';
+      copyBtn.style.display = "none";
+
+      try {
+        const response = await axios(`/pair/mega?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
+        const code = response.data.code || "Service Unavailable";
+        if (code === "Service Unavailable") {
+          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
+        } else {
+          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
+          copyBtn.style.display = "flex";
+        }
+      } catch (error) {
+        console.error("Error generating code:", error);
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code. Please try again.</div>';
+      } finally {
+        loadingSpinner.style.display = "none";
+      }
+    });
+
+    // Pair-2 functionality
+    document.getElementById("submit2").addEventListener("click", async (e) => {
+      e.preventDefault();
+      const mobileNumberInput = document.getElementById("mobileNumber2");
+      const codeDisplay = document.getElementById("codeDisplay2");
+      const loadingSpinner = document.getElementById("loading2");
+      const copyBtn = document.getElementById("copy2");
+
+      const mobileNumber = mobileNumberInput.value.trim();
+      if (!mobileNumber) {
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
+        copyBtn.style.display = "none";
+        return;
+      }
+
+      loadingSpinner.style.display = "block";
+      codeDisplay.innerHTML = '';
+      copyBtn.style.display = "none";
+
+      try {
+        const response = await axios(`/pair/base64?number=${mobileNumber.replace(/[^0-9]/g, "")}`);
+        const code = response.data.code || "Service Unavailable";
+        if (code === "Service Unavailable") {
+          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
+        } else {
+          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
+          copyBtn.style.display = "flex";
+        }
+      } catch (error) {
+        console.error("Error generating code:", error);
+        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code. Please try again.</div>';
+      } finally {
+        loadingSpinner.style.display = "none";
+      }
+    });
+
+    // Copy functionality for both buttons
+    document.getElementById("copy1").addEventListener("click", function() {
+      copyCode("codeDisplay1", "copy1");
+    });
+
+    document.getElementById("copy2").addEventListener("click", function() {
+      copyCode("codeDisplay2", "copy2");
+    });
+
+    function copyCode(displayId, copyBtnId) {
+      const codeDisplay = document.getElementById(displayId).innerText;
+      const code = codeDisplay.replace('CODE: ', '');
+      const copyBtn = document.getElementById(copyBtnId);
+
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        copyBtn.disabled = true;
+        copyBtn.style.opacity = "0.6";
+        copyBtn.style.cursor = "not-allowed";
+
+        const toast = document.getElementById("toast");
+        toast.style.display = "block";
+        toast.style.opacity = "1";
+
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.disabled = false;
+          copyBtn.style.opacity = "1";
+          copyBtn.style.cursor = "pointer";
+
+          toast.style.opacity = "0";
+          setTimeout(() => {
+            toast.style.display = "none";
+          }, 300);
+        }, 2000);
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+      });
+    }
+  </script>
+</body>
+</html>
