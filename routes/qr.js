@@ -114,7 +114,7 @@ router.get("/", async (req, res) => {
 
               console.log("Sending to JID:", userJid);
 
-              const SESSION_ID = `𓂃ᷱ᪳𝐀ɭīī-𝐌𝐃-𝐁𓋜𝐓≈${result.slug}^👑🇦🇱`;
+              const SESSION_ID = `𓂃ᷱ᪳𝘅_𝗸𝗶𝗿𝗮_𝐁𓋜𝐓≈${result.slug}^☁️`;
 
               await Smd.sendMessage(userJid, {
                 text: SESSION_ID,
@@ -132,10 +132,10 @@ router.get("/", async (req, res) => {
 *╰─────────────────⳹*
 *YOUR SESSION 👀:* ${SESSION_ID}
 🪀 *ᴏғғɪᴄɪᴀʟ ᴄʜᴀɴɴᴇʟ:*  
-*https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h*
+*https://whatsapp.com/channel/0029VbAW43yFXUuX1sTt0l0i*
 
 🖇️ *ɢɪᴛʜᴜʙ ʀᴇᴘᴏ:*  
-*https://github.com/ALI-INXIDE/ALI-MD*`;
+*https://github.com/sumon9836/KAISEN-MD*`;
 
               // Send the session connected message
               await Smd.sendMessage(userJid, {
@@ -144,8 +144,8 @@ router.get("/", async (req, res) => {
                   externalAdReply: {
                     title: "SESSION ID CONNECTED 🎀",
                     body: "",
-                    thumbnailUrl: "https://files.catbox.moe/kyllga.jpg",
-                    sourceUrl: "https://github.com/ALI-INXIDE/ALI-MD",
+                    thumbnailUrl: "https://i.pinimg.com/564x/79/64/e7/7964e79ffd25303300e0ba2adddedca0.jpg",
+                    sourceUrl: "https://github.com/sumon9836/KAISEN-MD",
                     mediaType: 1,
                     renderLargerThumbnail: true,
                     showAdAttribution: true,

@@ -221,7 +221,7 @@ process.on('unhandledRejection', (reason, promise) => {
 initializeServer().then(() => {
     app.listen(PORT, HOST, () => {
         console.log(`🚀 Server running on http://${HOST}:${PORT}`);
-        console.log('🔥 Kaisen-MD Pairing Web Ready!');
+        console.log('🔥 x-kira-MD Pairing Web Ready!');
         console.log('📊 Health check available at /health');
     });
 }).catch((error) => {
