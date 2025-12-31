@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
   const fetch = (await import("node-fetch")).default;
   async function KIRA() {
     const {
-      default: makeWASocket,
+   makeWASocket,
       useMultiFileAuthState,
       delay,
       makeCacheableSignalKeyStore,
