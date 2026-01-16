@@ -6,7 +6,6 @@ const pino = require("pino");
 let { toBuffer } = require("qrcode");
 const path = require("path");
 const { Boom } = require("@hapi/boom");
-
 const { makeid } = require("../utils/id");
 
 function removeFile(FilePath) {
@@ -23,12 +22,14 @@ router.get("/", async (req, res) => {
     const {
       default: makeWASocket,
       useMultiFileAuthState,
+      fetchLatestBaileysVersion,
       delay,
       makeCacheableSignalKeyStore,
       Browsers,
       DisconnectReason,
     } = await import("@whiskeysockets/baileys");
 
+    const { version } = await fetchLatestBaileysVersion();
     const { state, saveCreds } = await useMultiFileAuthState("./temp/" + id);
 
     try {
@@ -40,6 +41,7 @@ router.get("/", async (req, res) => {
             pino({ level: "fatal" }).child({ level: "fatal" })
           ),
         },
+        version,
         printQRInTerminal: false,
         logger: pino({ level: "fatal" }).child({ level: "fatal" }),
         browser: Browsers.macOS("Safari"),
@@ -92,7 +94,7 @@ router.get("/", async (req, res) => {
             const jsonData = JSON.parse(data);
 
             const response = await fetch(
-              "https://ali-md-json-host.vercel.app/api/upload",
+              "https://x-kira-json-host.vercel.app/api/upload",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -103,7 +105,7 @@ router.get("/", async (req, res) => {
             const result = await response.json();
 
             if (result.success) {
-              const uploadUrl = `https://ali-md-json-host.vercel.app/${result.slug}`;
+              const uploadUrl = `https://x-kira-json-host.vercel.app/${result.slug}`;
               console.log("✅ Upload successful!");
               console.log("🌐 File URL:", uploadUrl);
               console.log("🔖 Slug:", result.slug);
